@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>CMI Continental｜汽修零件產業策略簡報 v1.0</title>
+<link rel="stylesheet" href="design-tokens.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --c-navy:#001529;
+    --c-orange:#ff6a00;
+    --c-orange-soft:#fff3eb;
+    --c-grey-bg:#f6f7f9;
+    --c-text:#1a1a1a;
+    --c-text-2:#4a4a4a;
+    --c-muted:#8a8a8a;
+    --c-line:#e6e8eb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Arial,"Helvetica Neue","PingFang TC","PingFang SC","Microsoft JhengHei","Noto Sans CJK TC","Heiti TC",sans-serif;color:var(--c-text);background:#dadde2;line-height:1.5;margin:0;padding:0;}
+  html,body{background:#fff;}
+
+  .page{
+    position:relative;
+    width:297mm;height:210mm;
+    background:#fff;
+    margin:0 auto;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,.15);
+    box-sizing:border-box;
+  }
+  section.page.report-section{padding:0 !important;border-top:0 !important;display:flex;flex-direction:column;justify-content:center;}
+  .section-head{text-align:center;justify-content:center;}
+  .section-head h2{text-align:center;}
+
+  .section-head{display:flex;align-items:center;gap:14px;padding:18px 32px 12px;border-bottom:3px solid var(--c-orange);flex-wrap:nowrap;}
+  .section-head .chap{background:var(--c-orange);color:#fff;font-weight:bold;padding:6px 14px;border-radius:4px;font-size:15.5px;letter-spacing:1px;white-space:nowrap;flex-shrink:0;}
+  .section-head h2{font-size:22px;color:var(--c-navy);flex:1;min-width:0;line-height:1.3;word-break:keep-all;overflow-wrap:break-word;}
+  .section-head .sub{margin-left:auto;font-size:13px;color:var(--c-muted);white-space:nowrap;flex-shrink:0;text-align:right;}
+  .footnote{display:none;}
+
+  /* ─── P1 Cover ─── */
+  .cover-hero{
+    position:relative;width:100%;height:100%;
+    background:
+      linear-gradient(115deg, rgba(0,21,41,0.92) 0%, rgba(0,21,41,0.72) 45%, rgba(0,62,128,0.45) 100%),
+      url("images/cover/cover-bg.png") center/cover no-repeat,
+      linear-gradient(135deg,#001529 0%,#003e80 100%);
+    color:#fff;overflow:hidden;
+  }
+  .cover-hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 85% 25%, rgba(255,106,0,.28), transparent 55%),
+               radial-gradient(circle at 15% 85%, rgba(0,150,255,.18), transparent 60%);
+    pointer-events:none;
+  }
+  .cover-logo-img{position:absolute;top:30px;left:40px;height:48px;z-index:2;}
+  .cover-inner{position:relative;z-index:2;padding:90px 60px 60px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .cover-eyebrow{font-size:15.5px;letter-spacing:6px;color:#ff6a00;font-weight:bold;}
+  .cover-title{font-size:60px;font-weight:900;line-height:1.05;margin-top:14px;text-shadow:0 4px 20px rgba(0,0,0,.4);}
+  .cover-sub-title{font-size:22px;color:#a5c5ea;margin-top:14px;}
+  .cover-meta{margin-top:30px;font-size:15.5px;color:#cfd8e3;text-align:center;line-height:1.9;}
+  .cover-meta .kw,.cover-meta .mkt{display:block;}
+  .cover-meta .mkt{margin-top:4px;}
+  .cover-meta .lbl{color:#ff9d5c;font-weight:bold;margin-right:2px;}
+  .cover-meta .sep{margin:0 10px;color:#5d7a9a;}
+  .cover-author{margin:36px auto 0;padding:14px 24px;background:rgba(255,255,255,.10);border-top:3px solid var(--c-orange);font-size:14.5px;border-radius:0 0 6px 6px;max-width:640px;line-height:1.7;text-align:center;}
+  .cover-author strong{color:#fff;font-size:15.5px;}
+
+  /* ─── P2 國際站介紹 ─── */
+  .intro-wrap{padding:8px 24px 0;display:grid;grid-template-columns:1.05fr 1fr;grid-template-rows:auto auto;gap:12px;align-content:center;}
+  .intro-card{background:#fff;border:1px solid var(--c-line);border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(12,42,94,.06);position:relative;}
+  .intro-card .head{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--c-orange);}
+  .intro-card .head .num{width:22px;height:22px;background:var(--c-orange);color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:bold;}
+  .intro-card .head h3{font-size:15.5px;font-weight:bold;color:var(--c-navy);}
+  .intro-card .head .sub-en{font-size:13px;color:var(--c-text-2);margin-left:auto;letter-spacing:.5px;}
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+  .stat-cell{padding:10px 6px 9px;background:linear-gradient(135deg,#fff5ec 0%,#ffe9d3 100%);border-radius:7px;text-align:center;position:relative;overflow:hidden;}
+  .stat-cell::before{content:"";position:absolute;top:-12px;right:-12px;width:36px;height:36px;background:rgba(255,111,26,.10);border-radius:50%;}
+  .stat-cell .ico{font-size:14.5px;margin-bottom:1px;line-height:1;}
+  .stat-cell .v{font-size:21px;font-weight:bold;color:var(--c-orange);line-height:1.1;letter-spacing:-.5px;}
+  .stat-cell .v small{font-size:13.5px;font-weight:bold;}
+  .stat-cell .l{font-size:12.5px;color:var(--c-text-1);margin-top:2px;line-height:1.3;font-weight:bold;}
+  .stat-cell .sub{font-size:12px;color:var(--c-text-2);margin-top:1px;line-height:1.3;}
+  .stat-row2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px;}
+  .stat-row2 .stat-cell{background:linear-gradient(135deg,#eef3fa 0%,#dde7f5 100%);}
+  .stat-row2 .stat-cell::before{background:rgba(29,109,187,.10);}
+  .stat-row2 .stat-cell .v{color:var(--c-navy);}
+  .orange-banner,.stat-tagline{margin-top:8px;padding:8px 12px;background:linear-gradient(90deg,var(--c-orange) 0%,#ff8a3d 100%);color:#fff;border-radius:6px;text-align:center;font-size:13px;font-weight:bold;letter-spacing:.5px;line-height:1.4;}
+  .orange-banner small,.stat-tagline small{display:block;font-size:12.5px;margin-top:2px;opacity:.92;font-weight:normal;letter-spacing:.3px;}
+  .trade-flow{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:6px;}
+  .trade-step{flex:1;text-align:center;padding:6px 4px;}
+  .trade-step .ico{width:34px;height:34px;border-radius:50%;background:var(--c-orange-soft);color:var(--c-orange);display:flex;align-items:center;justify-content:center;font-size:17px;margin:0 auto 4px;}
+  .trade-step .lab{font-size:12.5px;color:var(--c-text-1);font-weight:bold;line-height:1.3;}
+  .trade-arrow{color:var(--c-orange);font-size:15.5px;font-weight:bold;}
+  .trade-banner{margin-top:8px;padding:8px 12px;background:linear-gradient(90deg,var(--c-orange) 0%,#ff8a3d 100%);color:#fff;border-radius:6px;text-align:center;font-size:13px;font-weight:bold;letter-spacing:.5px;line-height:1.4;}
+  .trade-banner small{display:block;font-size:12.5px;margin-top:2px;opacity:.92;font-weight:normal;letter-spacing:.3px;}
+  .pyramid{display:flex;flex-direction:column;align-items:center;gap:3px;margin-top:4px;}
+  .py-row{display:flex;align-items:center;gap:8px;padding:5px 10px;color:#fff;font-size:13.5px;font-weight:bold;border-radius:4px;}
+  .py-row .lv{font-size:12.5px;letter-spacing:.4px;}
+  .py-row .desc{font-size:12.5px;font-weight:normal;opacity:.95;}
+  .py-row.l4{width:62%;background:#0c2a5e;}
+  .py-row.l3{width:72%;background:#1d4889;}
+  .py-row.l2{width:82%;background:#2e6dba;}
+  .py-row.l1{width:92%;background:#5a9bdf;color:var(--c-navy);}
+  .py-row.l0{width:100%;background:#cfdcec;color:var(--c-navy);}
+  .py-foot{margin-top:8px;padding:8px 12px;background:linear-gradient(90deg,var(--c-orange) 0%,#ff8a3d 100%);color:#fff;border-radius:6px;text-align:center;font-size:13px;font-weight:bold;letter-spacing:.5px;line-height:1.4;}
+  .py-foot small{display:block;font-size:12.5px;margin-top:2px;opacity:.92;font-weight:normal;letter-spacing:.3px;}
+  .one-stop{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+  .os-card{background:linear-gradient(135deg,#0c2a5e 0%,#1d6dbb 100%);color:#fff;border-radius:7px;padding:10px 8px;text-align:center;position:relative;}
+  .os-card .ico{font-size:20px;margin-bottom:4px;}
+  .os-card .t{font-size:13px;font-weight:bold;line-height:1.3;}
+  .os-card .d{font-size:12px;opacity:.85;margin-top:3px;line-height:1.35;}
+  .os-foot{grid-column:1/4;margin-top:8px;padding:8px 12px;background:linear-gradient(90deg,var(--c-orange) 0%,#ff8a3d 100%);color:#fff;border-radius:6px;text-align:center;font-size:13px;font-weight:bold;letter-spacing:.5px;line-height:1.4;}
+  .os-foot small{display:block;font-size:12.5px;margin-top:2px;opacity:.92;font-weight:normal;letter-spacing:.3px;}
+
+  /* ─── P7 流量 ─── */
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:24px 32px 0;}
+  .stat-tile{background:linear-gradient(160deg,#fff3eb 0%,#fff 100%);border:1px solid #ffd8b8;padding:18px 22px;border-radius:8px;}
+  .stat-tile .label{font-size:13.5px;color:var(--c-muted);letter-spacing:1px;}
+  .stat-tile .val{font-size:30px;color:var(--c-navy);font-weight:900;margin-top:4px;}
+  .stat-tile .delta{font-size:13.5px;margin-top:4px;}
+  .stat-tile .delta.pos{color:#0a9c5b;}
+  .stat-tile .delta.neg{color:#d63a2f;}
+  .chart-wrap{padding:14px 32px 0;height:330px;position:relative;}
+  .insight-box{margin:6px 32px;padding:12px 16px;background:#f1f6fb;border-left:3px solid #1d6dbb;font-size:13.5px;color:var(--c-text-2);}
+
+  /* ─── P8 全球商機 ─── */
+  .opp-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;padding:20px 32px 0;align-items:stretch;}
+  .opp-champ{padding:22px 26px;background:linear-gradient(135deg,#001529 0%,#003e80 100%);color:#fff;border-radius:10px;position:relative;overflow:hidden;}
+  .opp-champ::before{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,106,0,.4),transparent 70%);}
+  .opp-champ .lbl{font-size:12.5px;letter-spacing:3px;color:#a5c5ea;font-weight:bold;}
+  .opp-champ .flag{font-size:56px;margin-top:4px;line-height:1;}
+  .flag-img{width:24px;height:16px;object-fit:contain;vertical-align:middle;border-radius:2px;}
+  .flag-img-lg{width:56px;height:37px;object-fit:contain;border-radius:3px;}
+  .opp-champ .name{font-size:28px;font-weight:900;margin-top:4px;}
+  .opp-champ .share{font-size:54px;font-weight:900;color:var(--c-orange);line-height:1.05;margin-top:6px;}
+  .opp-champ .desc{font-size:13px;color:#cfd8e3;margin-top:6px;line-height:1.6;position:relative;}
+  .opp-list{display:flex;flex-direction:column;gap:6px;font-size:13.5px;}
+  .opp-row{display:grid;grid-template-columns:24px 22px 96px 1fr 60px;align-items:center;gap:10px;padding:6px 10px;background:#fafbfc;border:1px solid var(--c-line);border-radius:6px;}
+  .opp-row .rank{color:var(--c-muted);font-size:12.5px;font-weight:bold;}
+  .opp-row .flag{font-size:18px;line-height:1;}
+  .opp-row .cn{color:var(--c-navy);font-weight:bold;}
+  .opp-row .bar-wrap{height:8px;background:#e8edf3;border-radius:4px;overflow:hidden;}
+  .opp-row .bar{height:100%;background:linear-gradient(90deg,#1d6dbb,#3d8fdf);border-radius:4px;}
+  .opp-row .pct{text-align:right;color:#1d6dbb;font-weight:bold;}
+  .opp-foot{margin:14px 32px 0;padding:14px 18px;background:linear-gradient(90deg,#fff3eb,#fff);border-left:3px solid var(--c-orange);border-radius:0 6px 6px 0;font-size:13px;color:var(--c-text-2);line-height:1.7;}
+  .opp-foot .stitle{font-size:14.5px;font-weight:bold;color:var(--c-orange);letter-spacing:1px;margin-bottom:4px;}
+  .opp-foot strong{color:var(--c-navy);}
+
+  /* ─── P9 熱門產品 ─── */
+  .trend-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 24px 0;}
+  .trend-card{padding:0;border:1px solid var(--c-line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;background:#fff;}
+  .trend-card.motor{border-top:4px solid var(--c-orange);}
+  .trend-card.fan{border-top:4px solid #1d6dbb;}
+  .trend-card .ph{width:100%;aspect-ratio:5/3;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--c-line);position:relative;}
+  .trend-card .ph img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;}
+  .trend-card .ph .src{position:absolute;bottom:3px;right:3px;font-size:11px;color:#fff;background:rgba(12,42,94,.72);padding:1.5px 5px;border-radius:3px;letter-spacing:.3px;}
+  .trend-card .body{padding:8px 10px 10px;display:flex;flex-direction:column;flex:1;}
+  .trend-tag{display:inline-block;font-size:12px;padding:1.5px 6px;border-radius:3px;letter-spacing:.6px;font-weight:bold;align-self:flex-start;}
+  .trend-card.motor .trend-tag{background:#fff3eb;color:var(--c-orange);}
+  .trend-card.fan .trend-tag{background:#e8f0fa;color:#1d6dbb;}
+  .trend-card .name{font-size:14.5px;font-weight:bold;color:var(--c-navy);margin-top:4px;line-height:1.2;}
+  .trend-card .en{font-size:12.5px;color:var(--c-muted);margin-top:1px;}
+  .trend-card .desc{font-size:12.5px;color:var(--c-text-2);margin-top:5px;line-height:1.45;}
+  .trend-card .biz{margin-top:auto;padding-top:5px;font-size:12.5px;color:#0a9c5b;font-weight:bold;}
+  section.page.p9-products{justify-content:flex-start!important;}
+  .product-coverage{padding:14px 32px 0;font-size:13px;color:var(--c-text-2);line-height:1.7;}
+  .product-coverage strong{color:var(--c-navy);}
+
+  /* ─── P10 Benchmark ─── */
+  .bench-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;padding:24px 32px 0;}
+  .bench-chart{height:340px;position:relative;background:#fafbfc;border-radius:8px;padding:14px;}
+  .bench-side{display:flex;flex-direction:column;gap:10px;}
+  .bench-side .metric{padding:12px 14px;background:#fafbfc;border-left:3px solid var(--c-orange);border-radius:0 6px 6px 0;}
+  .bench-side .metric .k{font-size:12.5px;color:var(--c-muted);letter-spacing:1px;}
+  .bench-side .metric .v{font-size:22px;color:var(--c-navy);font-weight:900;}
+  .bench-side .metric .h{font-size:12.5px;color:var(--c-text-2);margin-top:2px;}
+
+  /* ─── overflow fix patch (P8 opportunities / P9 products) ─── */
+  .p8-opportunities .opp-foot{margin-top:8px;line-height:1.45;padding:8px 12px 9px;}
+  .p8-opportunities .opp-foot div[style*="grid-template-columns:repeat(5"]{gap:4px 10px !important;font-size:12px !important;margin-top:4px !important;}
+  .p9-products .trend-card .body{padding:6px 9px 7px !important;}
+  .p9-products .trend-card .desc{line-height:1.4 !important;margin-top:1px;}
+  .p9-products .trend-card .name{font-size:13px !important;line-height:1.2;}
+  .p9-products .trend-card .biz{margin-top:3px !important;}
+
+  /* ─── P11 同行 ─── */
+  .peer-table{width:calc(100% - 64px);margin:18px 32px 0;border-collapse:collapse;font-size:13.5px;}
+  .peer-table th{background:var(--c-navy);color:#fff;padding:10px 12px;text-align:left;font-size:12.5px;letter-spacing:1px;}
+  .peer-table td{padding:10px 12px;border-bottom:1px solid var(--c-line);vertical-align:top;}
+  .peer-table tr:nth-child(even) td{background:#fafbfc;}
+  .peer-name{font-weight:bold;color:var(--c-navy);font-size:14.5px;}
+  .peer-badge{display:inline-block;padding:3px 8px;border-radius:3px;font-size:13px;font-weight:bold;letter-spacing:0.5px;}
+  .peer-badge.veteran{background:#5d2c8c;color:#fff;}
+  .peer-badge.expert{background:var(--c-orange);color:#fff;}
+  .peer-badge.gold{background:#d4a83a;color:#fff;}
+  .peer-table .url{font-size:13px;color:#1d6dbb;text-decoration:none;display:block;margin-top:4px;font-weight:normal;word-break:break-all;}
+  .peer-table .url::before{content:"🔗 ";font-size:12px;}
+  .peer-table .url:hover{color:var(--c-orange);text-decoration:underline;}
+
+  /* ─── P12 RFQ ─── */
+  .rfq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:20px 32px 0;}
+  .rfq-card{padding:16px 18px;border:1px solid var(--c-line);border-radius:8px;background:#fff;display:flex;flex-direction:column;}
+  .rfq-card .top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .rfq-card .country-tag{font-size:12.5px;background:#e8f0fa;color:#1d6dbb;padding:3px 8px;border-radius:3px;}
+  .rfq-card .post-time{font-size:13px;color:var(--c-muted);}
+  .rfq-card .title{font-size:15.5px;font-weight:bold;color:var(--c-navy);margin-top:8px;line-height:1.4;}
+  .rfq-card .specs{margin-top:8px;font-size:12.5px;color:var(--c-text-2);line-height:1.6;}
+  .rfq-card .specs strong{color:var(--c-navy);}
+  .rfq-card .cta{margin-top:auto;padding-top:10px;}
+  .rfq-card .cta a{display:inline-block;background:var(--c-orange);color:#fff;padding:6px 14px;border-radius:4px;font-size:12.5px;font-weight:bold;text-decoration:none;}
+
+  /* ─── P13 入駐流程 ─── */
+  .flow-wrap{padding:8px 24px 0;}
+  .flow-timeline{position:relative;height:6px;margin:0 30px 14px;background:linear-gradient(90deg,#ff8a3d 0%,#ff6f1a 50%,#0c2a5e 100%);border-radius:3px;}
+  .flow-timeline::before,.flow-timeline::after{content:"";position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translateY(-50%);}
+  .flow-timeline::before{left:-7px;background:#ff8a3d;box-shadow:0 0 0 3px #fff,0 0 0 4px #ff8a3d;}
+  .flow-timeline::after{right:-7px;background:#0c2a5e;box-shadow:0 0 0 3px #fff,0 0 0 4px #0c2a5e;}
+  .flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;position:relative;}
+  .flow-step{position:relative;background:#fff;border:1px solid var(--c-line);border-radius:10px;padding:0 13px 12px;display:flex;flex-direction:column;box-shadow:0 2px 6px rgba(12,42,94,.06);overflow:visible;}
+  .flow-step .ribbon{margin:-1px -13px 0;padding:8px 12px 8px;background:linear-gradient(135deg,var(--c-orange) 0%,#ff8a3d 100%);color:#fff;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:bold;letter-spacing:.6px;}
+  .flow-step .ribbon .badge{width:24px;height:24px;background:#fff;color:var(--c-orange);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14.5px;font-weight:bold;}
+  .flow-step .icon-row{display:flex;align-items:center;gap:8px;margin:10px 0 4px;}
+  .flow-step .icon{width:38px;height:38px;border-radius:9px;background:var(--c-orange-soft);color:var(--c-orange);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .flow-step .title{font-size:16px;font-weight:bold;color:var(--c-navy);line-height:1.25;}
+  .flow-step ul{margin:6px 0 0;padding-left:14px;font-size:13.5px;color:var(--c-text-2);line-height:1.55;flex:1;}
+  .flow-step ul li{margin-bottom:3px;position:relative;}
+  .flow-step .pay-row{display:flex;gap:5px;margin-top:6px;}
+  .flow-step .pay-tag{flex:1;padding:5px 4px;background:var(--c-orange-soft);border-radius:4px;text-align:center;font-size:13px;color:var(--c-orange);font-weight:bold;line-height:1.35;}
+  .flow-step .deliver{margin-top:8px;padding:5px 8px;background:#f1f4f8;border-left:3px solid var(--c-navy);border-radius:0 4px 4px 0;font-size:12.5px;color:var(--c-navy);font-weight:bold;line-height:1.4;}
+  .flow-step .deliver span{color:var(--c-text-2);font-weight:normal;}
+  .flow-step .day-tag{position:absolute;top:-9px;right:10px;padding:2px 9px;background:var(--c-navy);color:#fff;border-radius:10px;font-size:12.5px;font-weight:bold;letter-spacing:.4px;z-index:3;}
+  .flow-arrow{position:absolute;top:32px;right:-9px;width:18px;height:18px;background:var(--c-navy);color:#fff;border-radius:50%;text-align:center;line-height:18px;font-size:12.5px;z-index:2;box-shadow:0 0 0 2px #fff;}
+  .flow-step:last-child .flow-arrow{display:none;}
+  .flow-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 24px 0;}
+  .flow-benefit{padding:10px 12px;background:#fff;border:1px solid var(--c-line);border-left:3px solid var(--c-orange);border-radius:5px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--c-text-1);}
+  .flow-benefit .b-icon{font-size:18px;}
+  .flow-benefit b{color:var(--c-navy);font-weight:bold;}
+  .flow-note{margin:10px 24px 0;padding:11px 18px;background:linear-gradient(90deg,#0c2a5e 0%,#1d6dbb 100%);color:#fff;border-radius:8px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;}
+  .flow-note .lead{font-weight:bold;font-size:14.5px;}
+  .flow-note .meta{font-size:13px;opacity:.9;}
+
+  /* ─── P14 戰略行動方案 ─── */
+  .action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px 32px 0;}
+  .action-card{padding:20px 22px;background:#fff;border:1px solid var(--c-line);border-top:5px solid var(--c-orange);border-radius:8px;}
+  .action-card .num{display:inline-block;width:30px;height:30px;background:var(--c-navy);color:#fff;border-radius:50%;text-align:center;line-height:30px;font-weight:bold;}
+  .action-card .t{font-size:16px;font-weight:bold;color:var(--c-navy);margin-top:10px;}
+  .action-card .d{font-size:13px;color:var(--c-text-2);margin-top:8px;line-height:1.7;}
+  .action-card .kpi{margin-top:10px;padding:8px 10px;background:var(--c-orange-soft);border-radius:4px;font-size:12.5px;color:var(--c-orange);font-weight:bold;}
+
+  /* ─── P15 平台對比 ─── */
+  .compare-wrap{padding:12px 24px 0;}
+  .compare-table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;table-layout:fixed;}
+  .compare-table th{padding:10px 8px;text-align:center;font-size:13.5px;font-weight:bold;border:1px solid var(--c-line);}
+  .compare-table th.dim{background:var(--c-navy);color:#fff;width:96px;border-color:var(--c-navy);}
+  .compare-table th.ali{background:var(--c-orange);color:#fff;border-color:var(--c-orange);font-size:14.5px;}
+  .compare-table th.other{background:#f1f4f8;color:var(--c-text-1);}
+  .compare-table td{padding:8px 9px;border:1px solid var(--c-line);font-size:13.5px;color:var(--c-text-2);vertical-align:middle;line-height:1.5;}
+  .compare-table td.dim-cell{background:#0c2a5e;color:#fff;font-weight:bold;text-align:center;font-size:13px;}
+  .compare-table td.ali-cell{background:#fff5ec;color:var(--c-text-1);font-weight:600;}
+  .compare-table .yes{display:inline-block;color:#1b8c4b;font-weight:bold;margin-right:5px;font-size:13.5px;}
+  .compare-table .no{display:inline-block;color:#c0392b;font-weight:bold;margin-right:5px;font-size:13.5px;}
+  .compare-conclude{margin:14px 24px 0;padding:14px 22px;background:linear-gradient(90deg,#0c2a5e 0%,#1d6dbb 100%);color:#fff;border-radius:8px;font-size:14px;text-align:center;line-height:1.7;}
+  .compare-conclude strong{color:#ffc266;font-size:15.5px;}
+
+  /* ─── P16 Closing ─── */
+  .closing-orange{
+    width:100%;height:100%;
+    background:linear-gradient(135deg,#ff6a00 0%,#ff8a2c 100%);
+    color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .closing-orange::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 20%, rgba(255,255,255,.15), transparent 60%);
+  }
+  .closing-orange h1{font-size:80px;font-weight:900;letter-spacing:8px;text-shadow:0 6px 30px rgba(0,0,0,.20);}
+  .closing-orange .sub{margin-top:20px;font-size:22px;letter-spacing:4px;opacity:0.95;}
+  .closing-orange .author-card{
+    margin-top:50px;padding:20px 28px;background:rgba(255,255,255,.18);border-radius:8px;font-size:15.5px;line-height:1.9;backdrop-filter:blur(6px);
+  }
+  .closing-orange .author-card strong{font-size:16px;}
+  .closing-orange img{position:absolute;bottom:30px;height:36px;opacity:.88;}
+
+  @media print{
+    @page{size:A4 landscape;margin:0;}
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
+    .page:last-child{page-break-after:auto;break-after:auto;}
+  }
+
+
+/* v14 fixed product pages: scoped to prevent leakage */
+.product-page{--c-navy:#001529;
+      --c-navy-2:#0c2a5e;
+      --c-blue:#1d6dbb;
+      --c-sky:#eaf4ff;
+      --c-orange:#ff6a00;
+      --c-orange-2:#ff8a3d;
+      --c-purple:#6b57eb;
+      --c-purple-soft:#f0edff;
+      --c-cyan:#25b8c4;
+      --c-text:#172437;
+      --c-text-2:#435267;
+      --c-muted:#708096;
+      --c-line:#dce3ec;
+      --c-bg:#e9edf2;
+      --font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,"PingFang TC","PingFang SC","Microsoft JhengHei","Noto Sans CJK TC","Heiti TC",sans-serif;}
+.product-page .section-head{height:78px;display:flex;align-items:center;gap:14px;padding:16px 32px 12px;border-bottom:3px solid var(--c-orange)}
+.product-page .section-head .chap{background:var(--c-orange);color:#fff;font-weight:800;padding:7px 14px;border-radius:4px;font-size:15.5px;letter-spacing:1px;white-space:nowrap}
+.product-page .section-head h2{margin:0;flex:1;text-align:center;font-size:25px;line-height:1.2;color:var(--c-navy);letter-spacing:.2px}
+.product-page .section-head .sub{min-width:210px;text-align:right;font-size:13px;color:var(--c-muted);white-space:nowrap}
+.product-page .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--c-orange)}
+.product-page .muted{color:var(--c-muted)}
+.product-page .orange-banner{padding:10px 14px;background:linear-gradient(90deg,var(--c-orange),var(--c-orange-2));color:#fff;border-radius:6px;text-align:center;font-size:13.5px;font-weight:800;letter-spacing:.4px}
+.product-page .logo-word{font-weight:900;letter-spacing:.8px}
+.product-page .logo-word .ai{color:var(--c-purple)}
+.product-page .brand-dot{width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;background:conic-gradient(from 210deg,var(--c-blue),#17d8cf,var(--c-purple),var(--c-orange),var(--c-blue));font-weight:900;font-size:16px}
+.product-page .aireach-title{display:flex;align-items:center;justify-content:center;gap:10px}
+.product-page .aireach-title img{width:46px;height:46px;object-fit:contain;flex:0 0 46px}
+.product-page .okki-title{display:flex;align-items:center;justify-content:center;gap:11px}
+.product-page .okki-title img{width:112px;height:30px;object-fit:contain;flex:0 0 112px}
+/* OKKI */
+.product-page .okki-body{flex:1;padding:20px 32px 24px;background:linear-gradient(135deg,#f8fbff 0%,#fff 58%,#f7f2ff 100%);display:flex;flex-direction:column}
+.product-page .okki-overview{min-height:112px;border-radius:12px;padding:17px 20px;display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:center;background:linear-gradient(115deg,var(--c-navy),#183663 72%,#44258e);color:#fff;position:relative;overflow:hidden}
+.product-page .okki-overview::after{content:"";position:absolute;width:260px;height:260px;border:42px solid rgba(107,87,235,.38);border-radius:50%;right:-112px;top:-133px}
+.product-page .okki-overview .eyebrow{color:#ff9d5c;position:relative;z-index:1}
+.product-page .okki-overview h3{font-size:28px;line-height:1.2;margin:3px 0 5px;position:relative;z-index:1}
+.product-page .okki-overview h3 em{font-style:normal;color:#63d6e4}
+.product-page .okki-overview p{font-size:13.5px;color:#d7e1ee;margin:0;position:relative;z-index:1}
+.product-page .lifecycle{display:flex;align-items:center;justify-content:flex-end;gap:5px;position:relative;z-index:1}
+.product-page .lifecycle span{padding:8px 9px;border-radius:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:800;white-space:nowrap}
+.product-page .lifecycle i{font-style:normal;color:#ff9d5c;font-weight:900}
+.product-page .okki-five{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;flex:1;margin-top:14px}
+.product-page .okki-domain{--accent:var(--c-orange);border:1px solid var(--c-line);border-top:4px solid var(--accent);border-radius:9px;background:#fff;padding:13px 12px 12px;display:flex;flex-direction:column;min-width:0}
+.product-page .okki-domain:nth-child(2){--accent:#12b9c7}
+.product-page .okki-domain:nth-child(3){--accent:#a85ee8}
+.product-page .okki-domain:nth-child(4){--accent:#196ae8}
+.product-page .okki-domain:nth-child(5){--accent:#684eea}
+.product-page .domain-head{display:grid;grid-template-columns:38px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.product-page .domain-num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:15px;font-weight:900;box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 12%,transparent)}
+.product-page .domain-head h4{font-size:18px;line-height:1.15;margin:0;color:var(--c-navy)}
+.product-page .domain-head small{display:block;font-size:10.5px;color:var(--c-muted);margin-top:2px}
+.product-page .domain-desc{font-size:12.5px;line-height:1.45;color:var(--c-text-2);margin:0 0 9px;min-height:37px}
+.product-page .domain-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.product-page .domain-list li{min-height:31px;padding:6px 7px 6px 20px;border-radius:5px;background:#f5f7fa;color:var(--c-navy-2);font-size:12.5px;line-height:1.35;position:relative;display:flex;align-items:center}
+.product-page .domain-list li::before{content:"";position:absolute;left:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.product-page .domain-value{margin-top:auto;padding-top:10px;font-size:11.5px;color:var(--c-muted);border-top:1px dashed #dce3ec}
+.product-page .domain-value strong{color:var(--accent);font-size:12.5px}
+.product-page .okki-flow{margin-top:12px;padding:10px 13px;border-radius:6px;background:linear-gradient(90deg,var(--c-orange),var(--c-purple),var(--c-blue));color:#fff;text-align:center;font-size:13.5px;font-weight:900;letter-spacing:.3px}
+/* AiReach */
+.product-page .reach-body{flex:1;padding:23px 32px 26px;background:linear-gradient(135deg,#f8fbff 0%,#eef6ff 62%,#fff7f1 100%);display:flex;flex-direction:column}
+.product-page .reach-top{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.product-page .reach-thesis{border-left:5px solid var(--c-orange);padding:5px 0 5px 17px;display:flex;flex-direction:column;justify-content:center}
+.product-page .reach-thesis h3{font-size:28px;line-height:1.2;margin:4px 0 7px;color:var(--c-navy)}
+.product-page .reach-thesis h3 em{font-style:normal;color:var(--c-blue)}
+.product-page .reach-thesis p{font-size:13.5px;color:var(--c-text-2);margin:0;max-width:610px}
+.product-page .blindspot{background:var(--c-navy);color:#fff;border-radius:10px;padding:13px 16px;display:grid;grid-template-columns:72px 1fr;gap:13px;align-items:center;position:relative;overflow:hidden}
+.product-page .blindspot::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;border:25px solid rgba(255,106,0,.28);right:-58px;top:-68px}
+.product-page .donut{width:68px;height:68px;border-radius:50%;background:conic-gradient(var(--c-orange) 0 28%,#4f87c6 28% 52%,#7db0e8 52% 86%,#c7d8eb 86%);display:grid;place-items:center}
+.product-page .donut::after{content:"盲區";width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--c-navy);font-size:14px;font-weight:900}
+.product-page .blindspot h4{font-size:16px;margin:0 0 3px;position:relative;z-index:1}
+.product-page .blindspot p{font-size:12px;line-height:1.5;color:#cfdbeb;margin:0;position:relative;z-index:1}
+.product-page .reach-path{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;position:relative;flex:1}
+.product-page .reach-path::before{content:"";position:absolute;left:15%;right:15%;top:38px;height:3px;background:linear-gradient(90deg,var(--c-orange),var(--c-blue));z-index:0}
+.product-page .reach-step{position:relative;z-index:1;background:rgba(255,255,255,.94);border:1px solid #d8e2ef;border-radius:10px;padding:13px 14px 14px;display:flex;flex-direction:column}
+.product-page .step-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.product-page .step-num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--c-navy);color:#fff;border:5px solid #fff;box-shadow:0 0 0 2px var(--c-orange);font-size:17px;font-weight:900}
+.product-page .reach-step:nth-child(2) .step-num{box-shadow:0 0 0 2px var(--c-purple)}
+.product-page .reach-step:nth-child(3) .step-num{box-shadow:0 0 0 2px var(--c-blue)}
+.product-page .step-head h4{font-size:18px;line-height:1.2;margin:0;color:var(--c-navy)}
+.product-page .step-head small{display:block;color:var(--c-muted);font-size:12.5px;margin-top:2px}
+.product-page .reach-step .lead{font-size:13px;color:var(--c-text-2);margin:0 0 7px;min-height:38px}
+.product-page .key-points{display:grid;gap:5px;margin-bottom:9px}
+.product-page .key-points div{padding:5px 8px;border-left:3px solid var(--c-blue);background:#f3f8fd;border-radius:0 4px 4px 0;font-size:12px;color:var(--c-text-2)}
+.product-page .key-points strong{font-size:14px;color:var(--c-blue);margin-right:5px}
+.product-page .visual{height:218px;min-height:218px;border-radius:8px;background:#f5f8fc;position:relative;overflow:hidden;border:1px solid #e3e9f0}
+.product-page .network{background:radial-gradient(circle at 50% 50%,#fff7ed 0 18%,#f3f8fd 19% 100%)}
+.product-page .network .hub{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px;background:linear-gradient(135deg,var(--c-orange),#ff9d37);border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:900;box-shadow:0 0 0 8px rgba(255,106,0,.11);z-index:2;text-align:center;line-height:1.15}
+.product-page .network .node{position:absolute;width:49px;height:49px;border-radius:50%;display:grid;place-items:center;text-align:center;background:#fff;border:3px solid var(--c-cyan);color:var(--c-navy);z-index:2;line-height:1.05}
+.product-page .network .node b{font-size:10.5px}
+.product-page .network .node small{font-size:8.5px;color:var(--c-muted)}
+.product-page .network .n1{left:8%;top:12%}
+.product-page .network .n2{left:9%;bottom:11%}
+.product-page .network .n3{left:28%;top:5%;border-color:#51a7df}
+.product-page .network .n4{right:8%;top:12%;border-color:#51a7df}
+.product-page .network .n5{right:9%;bottom:11%}
+.product-page .network .n6{right:28%;bottom:4%;border-color:var(--c-purple)}
+.product-page .network .link{position:absolute;height:1.5px;background:#afc9df;transform-origin:left center;width:115px;left:50%;top:50%;z-index:1}
+.product-page .network .l1{transform:rotate(205deg)}
+.product-page .network .l2{transform:rotate(155deg)}
+.product-page .network .l3{transform:rotate(232deg)}
+.product-page .network .l4{transform:rotate(335deg)}
+.product-page .network .l5{transform:rotate(25deg)}
+.product-page .network .l6{transform:rotate(52deg)}
+.product-page .ai-route{padding:11px;background:linear-gradient(180deg,#fbf9ff,#f3f7ff)}
+.product-page .signal-tags{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.product-page .signal-tags span{padding:4px 7px;border-radius:12px;background:#fff;border:1px solid #d8d0ff;color:var(--c-purple);font-size:10.5px;font-weight:800}
+.product-page .ai-mail{position:absolute;left:50%;top:69px;transform:translateX(-50%);width:76px;height:51px;border-radius:10px;background:linear-gradient(135deg,#b36cff,#7148e8);color:#fff;display:grid;place-items:center;font-size:20px;font-weight:900;box-shadow:0 8px 20px rgba(107,87,235,.22)}
+.product-page .ai-mail::before{content:"";position:absolute;inset:0;clip-path:polygon(0 0,50% 58%,100% 0);background:rgba(255,255,255,.2);border-radius:10px}
+.product-page .route-fan{position:absolute;left:17%;right:17%;top:126px;height:38px;border-top:2px solid #9eb5f5;border-left:2px solid #9eb5f5;border-right:2px solid #9eb5f5;border-radius:16px 16px 0 0}
+.product-page .recipients{position:absolute;left:12px;right:12px;bottom:10px;display:flex;justify-content:space-between}
+.product-page .recipient{width:42px;height:42px;border-radius:50%;background:#ffb13b;position:relative;border:3px solid #fff;box-shadow:0 0 0 1px #e0e6ee}
+.product-page .recipient:nth-child(2){background:#29bed7}
+.product-page .recipient:nth-child(3){background:#ff8a3d}
+.product-page .recipient:nth-child(4){background:#23c778}
+.product-page .recipient::before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;left:50%;top:8px;transform:translateX(-50%)}
+.product-page .recipient::after{content:"";position:absolute;width:22px;height:12px;border-radius:12px 12px 6px 6px;background:#fff;left:50%;bottom:6px;transform:translateX(-50%)}
+.product-page .revive{padding:10px;background:linear-gradient(145deg,#f5f8ff,#fff7fb)}
+.product-page .revive-panel{height:100%;background:#fff;border:1px solid #dfe6ee;border-radius:7px;padding:9px;display:flex;flex-direction:column}
+.product-page .revive-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:900;color:var(--c-navy);margin-bottom:7px}
+.product-page .revive-head i{font-style:normal;color:var(--c-blue);background:#eaf5ff;padding:3px 6px;border-radius:4px;font-size:9.5px}
+.product-page .revive .mini-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
+.product-page .revive .mini-kpi span{background:#f6f8fb;border-radius:4px;padding:6px 3px;text-align:center;font-size:9.5px;color:var(--c-muted)}
+.product-page .revive .mini-kpi strong{display:block;color:var(--c-navy);font-size:12px}
+.product-page .segment-row{display:grid;grid-template-columns:66px 1fr 42px;gap:6px;align-items:center;padding:6px 4px;border-top:1px solid #edf1f5;font-size:9.5px;color:var(--c-text-2)}
+.product-page .segment-row b{color:var(--c-navy);font-size:10px}
+.product-page .segment-row i{height:6px;border-radius:4px;background:#dce7f3;overflow:hidden}
+.product-page .segment-row i::after{content:"";display:block;height:100%;background:linear-gradient(90deg,var(--c-purple),var(--c-blue));width:78%}
+.product-page .segment-row:nth-of-type(4) i::after{width:58%}
+.product-page .segment-row:nth-of-type(5) i::after{width:88%}
+.product-page .segment-row em{font-style:normal;text-align:center;padding:2px 3px;border-radius:3px;background:#e9f8ef;color:#16844e;font-weight:800}
+.product-page .step-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.product-page .step-tags span{padding:4px 7px;border-radius:4px;background:#eef3f8;color:var(--c-navy-2);font-size:12.5px;font-weight:700}
+.product-page .reach-foot{margin-top:13px;display:grid;grid-template-columns:1fr 1.2fr;gap:10px;align-items:stretch}
+.product-page .reach-note{padding:10px 13px;background:#fff;border-left:3px solid var(--c-blue);border-radius:0 6px 6px 0;font-size:12.5px;color:var(--c-text-2)}
+.product-page .reach-note strong{color:var(--c-navy)}
+/* Smart Assistant Agent */
+.product-page .saa-body{flex:1;padding:22px 32px 26px;display:grid;grid-template-columns:282px 1fr;gap:22px;background:linear-gradient(135deg,#f8fbff 0%,#fff 60%,#f4f0ff 100%)}
+.product-page .saa-hero{background:var(--c-navy);border-radius:14px;color:#fff;padding:24px 22px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.product-page .saa-hero::before{content:"";position:absolute;width:290px;height:290px;border:44px solid rgba(107,87,235,.48);border-radius:50%;left:-170px;bottom:-150px}
+.product-page .saa-hero::after{content:"";position:absolute;right:-42px;top:-48px;width:150px;height:150px;border-radius:50%;background:rgba(255,106,0,.12)}
+.product-page .saa-brand{display:flex;align-items:center;gap:11px;font-size:22px;font-weight:900;position:relative;z-index:1}
+.product-page .saa-orbit{width:38px;height:38px;border-radius:50%;background:conic-gradient(from 210deg,#5b8cff,#28d7cf,#8b63ff,#ff62cb,#5b8cff);display:grid;place-items:center;position:relative;flex-shrink:0}
+.product-page .saa-orbit::before{content:"";width:21px;height:21px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.product-page .saa-hero h3{font-size:28px;line-height:1.2;margin:30px 0 10px;position:relative;z-index:1}
+.product-page .saa-hero p{font-size:13.5px;line-height:1.7;color:#d5dfec;margin:0;position:relative;z-index:1}
+.product-page .human-agent{margin-top:auto;padding:13px;background:rgba(255,255,255,.08);border:1px solid rgba(139,99,255,.55);border-radius:8px;position:relative;z-index:1}
+.product-page .human-agent .ha-row{display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;text-align:center;font-size:12.5px;color:#dbe5f2}
+.product-page .human-agent .ha-row strong{display:block;color:#fff;font-size:16px;margin-bottom:2px}
+.product-page .human-agent .arrow{color:#ff9d5c;font-weight:900;font-size:18px}
+.product-page .saa-main{display:flex;flex-direction:column;min-width:0}
+.product-page .saa-thesis{display:flex;align-items:end;gap:18px;padding:2px 3px 14px}
+.product-page .saa-thesis>div:first-child{flex:1}
+.product-page .saa-thesis h3{font-size:27px;line-height:1.18;margin:4px 0 6px;color:var(--c-navy)}
+.product-page .saa-thesis h3 em{font-style:normal;color:var(--c-purple)}
+.product-page .saa-thesis p{margin:0;font-size:13.5px;color:var(--c-text-2)}
+.product-page .saa-pill{padding:8px 11px;background:var(--c-purple-soft);color:var(--c-purple);border-radius:6px;font-size:12.5px;font-weight:800;white-space:nowrap}
+.product-page .agent-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative}
+.product-page .agent-flow::before{content:"";position:absolute;left:16%;right:16%;top:30px;height:2px;background:linear-gradient(90deg,var(--c-orange),var(--c-purple),var(--c-blue))}
+.product-page .agent-stage{position:relative;background:#fff;border:1px solid var(--c-line);border-radius:9px;padding:13px 13px 12px;min-height:126px}
+.product-page .agent-stage .num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--c-navy);color:#fff;border:4px solid #fff;box-shadow:0 0 0 2px var(--c-orange);font-weight:900;position:relative;z-index:1}
+.product-page .agent-stage:nth-child(2) .num{box-shadow:0 0 0 2px var(--c-purple)}
+.product-page .agent-stage:nth-child(3) .num{box-shadow:0 0 0 2px var(--c-blue)}
+.product-page .agent-stage h4{margin:10px 0 4px;font-size:16px;color:var(--c-navy)}
+.product-page .agent-stage p{margin:0;font-size:12.5px;color:var(--c-text-2);line-height:1.5}
+.product-page .capability-box{margin-top:13px;padding:12px 14px;background:var(--c-navy);border-radius:9px;display:grid;grid-template-columns:150px 1fr;gap:13px;align-items:center}
+.product-page .capability-box h4{margin:0;color:#fff;font-size:17px;line-height:1.3}
+.product-page .capability-box h4 small{display:block;color:#aebed2;font-size:12px;margin-top:5px;font-weight:500}
+.product-page .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.product-page .cap-grid span{padding:7px 5px;border-radius:5px;text-align:center;background:rgba(255,255,255,.09);border:1px solid rgba(139,99,255,.38);color:#fff;font-size:12px;font-weight:700}
+.product-page .conversion-box{margin-top:10px;padding:10px 12px;background:#fff;border:1px solid var(--c-line);border-radius:8px}
+.product-page .conversion-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.product-page .conversion-head strong{font-size:14px;color:var(--c-navy)}
+.product-page .conversion-head span{font-size:11.5px;color:var(--c-muted)}
+.product-page .conversion-chain{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}
+.product-page .conversion-step{min-width:0;padding:7px 8px;border-radius:5px;background:#f4f7fa;position:relative}
+.product-page .conversion-step:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--c-orange);font-weight:900}
+.product-page .conversion-step strong{display:block;font-size:13.5px;color:var(--c-navy);margin-bottom:2px}
+.product-page .conversion-step small{display:block;font-size:10.5px;line-height:1.3;color:var(--c-text-2)}
+.product-page .waste-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.product-page .waste-card{padding:8px 9px;background:#fff8f4;border:1px solid #ffd8c2;border-left:3px solid var(--c-orange);border-radius:5px}
+.product-page .waste-card:nth-child(2){background:#f7f4ff;border-color:#ddd5ff;border-left-color:var(--c-purple)}
+.product-page .waste-card:nth-child(3){background:#f1f8ff;border-color:#d4e9fb;border-left-color:var(--c-blue)}
+.product-page .waste-card strong{display:block;font-size:13px;color:var(--c-navy);margin-bottom:2px}
+.product-page .waste-card span{display:block;font-size:10.5px;line-height:1.35;color:var(--c-text-2)}
+.product-page .saa-foot{margin-top:8px}
+/* SAA ecosystem positioning */
+.product-page .ecosystem-body{flex:1;padding:21px 32px 25px;background:linear-gradient(140deg,#f8fbff 0%,#fff 57%,#f5f1ff 100%);display:flex;flex-direction:column}
+.product-page .eco-hero{display:grid;grid-template-columns:1fr 270px;gap:18px;align-items:center;padding:15px 18px;background:var(--c-navy);border-radius:10px;color:#fff;position:relative;overflow:hidden}
+.product-page .eco-hero::after{content:"";position:absolute;right:-38px;top:-88px;width:220px;height:220px;border:42px solid rgba(107,87,235,.25);border-radius:50%}
+.product-page .eco-hero .eyebrow{color:#ff9d5c}
+.product-page .eco-hero h3{font-size:25px;line-height:1.2;margin:3px 0 5px}
+.product-page .eco-hero p{font-size:13px;color:#cdd9e8;margin:0}
+.product-page .eco-core{position:relative;z-index:1;border-left:1px dashed rgba(255,255,255,.35);padding-left:18px}
+.product-page .eco-core strong{display:block;font-size:16px;color:#fff;margin-bottom:4px}
+.product-page .eco-core span{font-size:12.5px;color:#cdd9e8}
+.product-page .eco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:15px;flex:1}
+.product-page .eco-card{background:#fff;border:1px solid var(--c-line);border-radius:9px;padding:14px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.product-page .eco-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--c-orange)}
+.product-page .eco-card:nth-child(2)::before{background:var(--c-purple)}
+.product-page .eco-card:nth-child(3)::before{background:var(--c-blue)}
+.product-page .eco-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.product-page .eco-icon{width:35px;height:35px;border-radius:8px;display:grid;place-items:center;background:#fff3eb;color:var(--c-orange);font-size:17px;font-weight:900}
+.product-page .eco-card:nth-child(2) .eco-icon{background:var(--c-purple-soft);color:var(--c-purple)}
+.product-page .eco-card:nth-child(3) .eco-icon{background:var(--c-sky);color:var(--c-blue)}
+.product-page .eco-head h4{font-size:16.5px;color:var(--c-navy);margin:0}
+.product-page .eco-head small{font-size:11.5px;color:var(--c-muted);display:block;margin-top:1px}
+.product-page .brands{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.product-page .brand-chip{display:inline-flex;align-items:center;gap:5px;min-height:28px;font-size:11.5px;font-weight:800;color:var(--c-navy-2);background:#f3f6f9;border:1px solid #e1e7ee;border-radius:5px;padding:4px 7px 4px 5px}
+.product-page .brand-chip img{width:18px;height:18px;object-fit:contain;flex:0 0 18px;border-radius:4px;background:#fff}
+.product-page .eco-line{font-size:12.5px;color:var(--c-text-2);line-height:1.5;padding:8px 9px;background:#f8fafc;border-radius:5px;margin-top:7px}
+.product-page .eco-line strong{display:block;color:var(--c-navy);font-size:13px;margin-bottom:2px}
+.product-page .eco-gap{margin-top:auto;padding-top:10px;font-size:12px;color:var(--c-muted)}
+.product-page .eco-gap b{color:#b64638}
+.product-page .saa-foundation{margin-top:14px;display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center;padding:12px 14px;background:linear-gradient(90deg,var(--c-navy),var(--c-navy-2));border-radius:9px;color:#fff}
+.product-page .saa-foundation h4{margin:0;font-size:17px;line-height:1.3}
+.product-page .saa-foundation h4 small{display:block;font-size:11.5px;color:#b8c7d9;margin-top:3px;font-weight:500}
+.product-page .foundation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.product-page .foundation-grid div{padding:8px 9px;border-radius:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.product-page .foundation-grid strong{display:block;color:#ff9d5c;font-size:13px}
+.product-page .foundation-grid span{font-size:11.5px;color:#d3deeb}
+.product-page .eco-foot{margin-top:10px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.product-page .eco-note{font-size:11.5px;color:var(--c-muted)}
+.product-page .eco-tag{padding:8px 12px;border-radius:5px;background:var(--c-purple-soft);color:var(--c-purple);font-size:12.5px;font-weight:800}
+.product-page{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;padding:0!important;border-top:0!important;color:var(--c-text);line-height:1.45;}
+
+  /* ─── URL Annex Pages ─── */
+  .fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 32px 0;}
+  .fit-card{padding:14px 16px;border:1px solid var(--c-line);border-radius:8px;background:#fff;}
+  .fit-card.high{border-left:4px solid #0a9c5b;}
+  .fit-card.mid{border-left:4px solid #ff6a00;}
+  .fit-card.low{border-left:4px solid #d63a2f;}
+  .fit-card .fit-title{font-size:14.5px;font-weight:bold;color:var(--c-navy);}
+  .fit-card .fit-score{font-size:24px;font-weight:900;margin:4px 0;}
+  .fit-card.high .fit-score{color:#0a9c5b;}
+  .fit-card.mid .fit-score{color:#ff6a00;}
+  .fit-card.low .fit-score{color:#d63a2f;}
+  .fit-card .fit-desc{font-size:12.5px;color:var(--c-text-2);line-height:1.5;}
+  .swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 32px 0;}
+  .swot-card{padding:18px 20px;border-radius:8px;color:#fff;}
+  .swot-card.s{background:linear-gradient(135deg,#0a9c5b,#0d7a48);}
+  .swot-card.w{background:linear-gradient(135deg,#d63a2f,#b02a1f);}
+  .swot-card.o{background:linear-gradient(135deg,#1d6dbb,#155a9e);}
+  .swot-card.t{background:linear-gradient(135deg,#8a6d3b,#6d5530);}
+  .swot-card h4{font-size:16px;margin-bottom:8px;letter-spacing:2px;}
+  .swot-card ul{margin:0;padding-left:16px;font-size:13px;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P1 ┃ Cover                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="cover-hero">
+    <img src="assets/logos/alibaba-white.png" alt="Alibaba.com" class="cover-logo-img">
+    <div class="cover-inner">
+      <div class="cover-eyebrow">ALIBABA.COM 產業分析報告</div>
+      <h1 class="cover-title">汽修零件產業<br>數位戰略簡報</h1>
+      <div class="cover-sub-title">CMI CONTINENTAL MARKETING INTERNATIONAL CO., LTD.｜CMI CONTINENTAL MARKETING INTERNATIONAL CO., LTD. 量身打造</div>
+      <div class="cover-meta">
+        <span class="kw"><span class="lbl">關鍵詞：</span>Auto Repair Tools · Automotive Aftermarket · Hand Tools · Socket Sets · Workshop Equipment</span>
+        <span class="mkt"><span class="lbl">市場：</span>美國 / 北美</span>
+      </div>
+      <div class="cover-author">
+        <strong>王俊翔</strong>｜阿里巴巴國際站 客戶經理<br>
+         
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P2 ┃ 認識阿里巴巴國際站                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <h2>阿里巴巴國際站｜全球最大線上展會＋無障礙溝通交易服務</h2>
+    <span class="sub">200+ 國家覆蓋・3 億註冊會員・40 種品類・一站式外貿解決方案</span>
+  </div>
+  <div class="intro-wrap">
+    <div class="intro-card">
+      <div class="head"><span class="num">1</span><h3>全球最大 B2B 線上展會</h3><span class="sub-en">GLOBAL B2B MARKETPLACE</span></div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="ico">👥</div><div class="v">3<small>億+</small></div><div class="l">註冊會員</div><div class="sub">全球累積買家總量</div></div>
+        <div class="stat-cell"><div class="ico">🌍</div><div class="v">200<small>+</small></div><div class="l">國家區域</div><div class="sub">主流外貿市場全覆蓋</div></div>
+        <div class="stat-cell"><div class="ico">🗣</div><div class="v">18<small>國</small></div><div class="l">語言即時翻譯</div><div class="sub">買賣雙方零障礙溝通</div></div>
+      </div>
+      <div class="stat-row2">
+        <div class="stat-cell"><div class="ico">📨</div><div class="v">30<small>萬+</small></div><div class="l">日活躍買家詢價</div><div class="sub">買家主動發出 RFQ</div></div>
+        <div class="stat-cell"><div class="ico">📦</div><div class="v">40<small>種</small></div><div class="l">產品大類</div><div class="sub">涵蓋全外貿主流品類</div></div>
+        <div class="stat-cell"><div class="ico">🏷</div><div class="v">5,900<small>+</small></div><div class="l">產品細項</div><div class="sub">細到單品 SKU 等級</div></div>
+      </div>
+      <div class="stat-tagline">⚡ 全球最大 B2B 線上展會｜流量・買家・品類三重領先<small>相當於 365 天不打烊的廣交會 + 全球 200 國買家在線</small></div>
+    </div>
+    <div class="intro-card">
+      <div class="head"><span class="num">2</span><h3>一站式外貿解決方案</h3><span class="sub-en">ONE-STOP TRADE SOLUTION</span></div>
+      <div class="one-stop">
+        <div class="os-card"><div class="ico">📊</div><div class="t">大數據</div><div class="d">買家行為＋市場洞察</div></div>
+        <div class="os-card"><div class="ico">🔥</div><div class="t">流量曝光</div><div class="d">關鍵字廣告＋自然搜尋</div></div>
+        <div class="os-card"><div class="ico">🌐</div><div class="t">語言系統</div><div class="d">18 國即時翻譯</div></div>
+        <div class="os-card"><div class="ico">🤝</div><div class="t">交易撮合</div><div class="d">RFQ＋詢盤＋信保</div></div>
+        <div class="os-card"><div class="ico">🛡</div><div class="t">金物流支持</div><div class="d">Trade Assurance 全程護航</div></div>
+        <div class="os-card"><div class="ico">📞</div><div class="t">電商學院</div><div class="d">客戶經理陪跑＋培訓</div></div>
+        <div class="os-foot">🚀 阿里巴巴提供完整功能介面｜協助台灣企業跨境出海<small>大數據・流量・語言・交易・金物流・學院 六大模組一站搞定</small></div>
+      </div>
+    </div>
+    <div class="intro-card">
+      <div class="head"><span class="num">3</span><h3>金物流團隊支持</h3><span class="sub-en">PAYMENT &amp; LOGISTICS</span></div>
+      <div class="trade-flow">
+        <div class="trade-step"><div class="ico">📋</div><div class="lab">客戶選品<br>規格／OEM</div></div>
+        <span class="trade-arrow">›</span>
+        <div class="trade-step"><div class="ico">💳</div><div class="lab">客戶付款<br>訂單成立</div></div>
+        <span class="trade-arrow">›</span>
+        <div class="trade-step"><div class="ico">🛡</div><div class="lab">Trade<br>Assurance</div></div>
+        <span class="trade-arrow">›</span>
+        <div class="trade-step"><div class="ico">🚢</div><div class="lab">聯繫物流<br>線上即時報價</div></div>
+        <span class="trade-arrow">›</span>
+        <div class="trade-step"><div class="ico">🤝</div><div class="lab">信用保障<br>確保交易安全</div></div>
+      </div>
+      <div class="trade-banner">🛡 多元收付工具｜線上收款結合全球物流服務<small>VISA · Mastercard · Wire Transfer T/T · Apple Pay · Google Pay · PayPal</small></div>
+    </div>
+    <div class="intro-card">
+      <div class="head"><span class="num">4</span><h3>國際站買家分層 3.0</h3><span class="sub-en">BUYER TIERS</span></div>
+      <div class="pyramid">
+        <div class="py-row l4"><span class="lv">L4 百萬買家</span><span class="desc">年消費 ≥ USD 100 萬</span></div>
+        <div class="py-row l3"><span class="lv">L3 企業買家</span><span class="desc">年消費 USD 5 萬–100 萬</span></div>
+        <div class="py-row l2"><span class="lv">L2 小型買家</span><span class="desc">年消費 USD 5,000–5 萬</span></div>
+        <div class="py-row l1"><span class="lv">L1 Scale-up</span><span class="desc">90 天內首次成交</span></div>
+        <div class="py-row l0"><span class="lv">L0 註冊買家</span><span class="desc">完成註冊待轉化</span></div>
+      </div>
+      <div class="py-foot">🎯 客單價高＋週期性復購，高品質買家成「兵家必爭」<small>搶先觸達 L3／L4 助力業績長效成長</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P3 ┃ Product 01｜OKKI -->
+<section class="page report-section product-page" id="okki">
+    <div class="section-head">
+      <span class="chap">OKKI 小滿</span>
+      <h2 class="okki-title"><img src="data:image/webp;base64,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" alt="OKKI Logo"><span>從開發、跟進到決策的智慧業務管家</span></h2>
+      <span class="sub">客戶經營 × 行銷協作 × 經營洞察</span>
+    </div>
+    <div class="okki-body">
+      <div class="okki-overview">
+        <div>
+          <div class="eyebrow">SMART BUSINESS OPERATING SYSTEM</div>
+          <h3>覆蓋 <em>5 大外貿核心業務場景</em></h3>
+          <p>把分散工具整合成一套工作台，從找客、溝通到團隊管理，讓每一次客戶互動都持續累積。</p>
+        </div>
+        <div class="lifecycle"><span>找客戶</span><i>→</i><span>談客戶</span><i>→</i><span>管商機</span><i>→</i><span>管客戶</span><i>→</i><span>管團隊</span></div>
+      </div>
+      <div class="okki-five">
+        <article class="okki-domain">
+          <div class="domain-head"><span class="domain-num">01</span><div><h4>找客戶</h4><small>Prospecting</small></div></div>
+          <p class="domain-desc">多來源掌握企業背景，建立更完整的潛客畫像。</p>
+          <ul class="domain-list"><li>客戶背調</li><li>智慧貿易資料</li><li>主流社媒資料</li><li>全網大數據</li><li>WhatsApp 企業版</li></ul>
+          <div class="domain-value"><strong>目標：</strong>更快找到對的人</div>
+        </article>
+        <article class="okki-domain">
+          <div class="domain-head"><span class="domain-num">02</span><div><h4>談客戶</h4><small>Engagement</small></div></div>
+          <p class="domain-desc">整合常用溝通管道，讓談前準備與跟進更有效率。</p>
+          <ul class="domain-list"><li>郵件／群發／EDM</li><li>Facebook 接入</li><li>WhatsApp 接入</li><li>銷售助手</li><li>談單指南</li></ul>
+          <div class="domain-value"><strong>目標：</strong>提高觸達與回覆</div>
+        </article>
+        <article class="okki-domain">
+          <div class="domain-head"><span class="domain-num">03</span><div><h4>管商機</h4><small>Opportunity</small></div></div>
+          <p class="domain-desc">把客戶行為轉成商機訊號，掌握每一筆成交進度。</p>
+          <ul class="domain-list"><li>自動建立商機</li><li>即時分析客戶行為</li><li>動態監測商機進程</li><li>流程可視化管理</li></ul>
+          <div class="domain-value"><strong>目標：</strong>避免商機停滯流失</div>
+        </article>
+        <article class="okki-domain">
+          <div class="domain-head"><span class="domain-num">04</span><div><h4>管客戶</h4><small>Customer CRM</small></div></div>
+          <p class="domain-desc">自動沉澱客戶資料，建立可持續經營的客戶資產。</p>
+          <ul class="domain-list"><li>公私海機制</li><li>客戶自動建檔</li><li>客戶查重複</li><li>客戶分群</li></ul>
+          <div class="domain-value"><strong>目標：</strong>客戶資產不再分散</div>
+        </article>
+        <article class="okki-domain">
+          <div class="domain-head"><span class="domain-num">05</span><div><h4>管團隊</h4><small>Team Management</small></div></div>
+          <p class="domain-desc">用一致流程追蹤進度，讓管理決策有清楚依據。</p>
+          <ul class="domain-list"><li>目標管理</li><li>自訂工作流</li><li>進度追蹤</li><li>統計分析</li><li>業績戰報</li></ul>
+          <div class="domain-value"><strong>目標：</strong>管理更透明可控</div>
+        </article>
+      </div>
+      <div class="okki-flow">一套工作台串聯完整外貿生命週期｜找客戶 → 談客戶 → 管商機 → 管客戶 → 管團隊</div>
+    </div>
+  </section>
+
+  <!-- P4 ┃ Product 02｜AiReach -->
+<section class="page report-section product-page" id="aireach">
+    <div class="section-head">
+      <span class="chap">AIREACH</span>
+      <h2 class="aireach-title"><img src="data:image/webp;base64,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" alt="AiReach Logo"><span>OKKI AiReach｜從任務到交付的全天候智慧行銷</span></h2>
+      <span class="sub">找增量 × 穿透產業 × 盤活舊客</span>
+    </div>
+    <div class="reach-body">
+      <div class="reach-top">
+        <div class="reach-thesis">
+          <div class="eyebrow">FROM VISIBLE DEMAND TO HIDDEN OPPORTUNITY</div>
+          <h3>不只等買家搜尋，主動找到<em>看不見的商機</em></h3>
+          <p>AiReach 從企業背景與產業關係出發，協助辨識潛在客戶、匹配溝通策略，再把既有客戶資料轉為下一輪行銷機會。</p>
+        </div>
+        <aside class="blindspot">
+          <div class="donut"></div>
+          <div><h4>傳統搜尋只看見部分需求</h4><p>商家常從產品名或公司名開始找客戶；產業上下游、採購角色與關聯企業，往往藏在搜尋結果之外。</p></div>
+        </aside>
+      </div>
+      <div class="reach-path">
+        <article class="reach-step">
+          <div class="step-head"><span class="step-num">01</span><div><h4>發掘站外潛客</h4><small>Find qualified prospects</small></div></div>
+          <p class="lead">從企業畫像與供應鏈關係切入，穿透上下游角色並找到關鍵決策人。</p>
+          <div class="key-points"><div><strong>主動學習</strong>建立企業生意畫像</div><div><strong>深度分析</strong>穿透產業供應鏈關係</div></div>
+          <div class="visual network">
+            <div class="hub">目標<br>企業</div>
+            <span class="node n1"><b>上游</b><small>材料商</small></span><span class="node n2"><b>同業</b><small>相似客群</small></span><span class="node n3"><b>採購</b><small>決策角色</small></span>
+            <span class="node n4"><b>下游</b><small>品牌商</small></span><span class="node n5"><b>關聯</b><small>集團企業</small></span><span class="node n6"><b>市場</b><small>潛在需求</small></span>
+            <span class="link l1"></span><span class="link l2"></span><span class="link l3"></span><span class="link l4"></span><span class="link l5"></span><span class="link l6"></span>
+          </div>
+          <div class="step-tags"><span>企業畫像</span><span>供應鏈關係</span><span>關鍵決策人</span></div>
+        </article>
+        <article class="reach-step">
+          <div class="step-head"><span class="step-num">02</span><div><h4>千人千面行銷</h4><small>Personalized engagement</small></div></div>
+          <p class="lead">完成潛客價值分層與個人化觸達，再依回覆狀態動態調整後續策略。</p>
+          <div class="key-points"><div><strong>深度背調</strong>定位關鍵決策人</div><div><strong>千人千郵</strong>依潛客特徵個人化觸達</div></div>
+          <div class="visual ai-route">
+            <div class="signal-tags"><span>採購規模</span><span>背調資訊</span><span>主營產品</span><span>國家語言</span></div>
+            <div class="ai-mail">AI</div><div class="route-fan"></div>
+            <div class="recipients"><span class="recipient"></span><span class="recipient"></span><span class="recipient"></span><span class="recipient"></span></div>
+          </div>
+          <div class="step-tags"><span>價值分層</span><span>內容匹配</span><span>動態調整</span></div>
+        </article>
+        <article class="reach-step">
+          <div class="step-head"><span class="step-num">03</span><div><h4>盤活舊客資產</h4><small>Reactivate customer value</small></div></div>
+          <p class="lead">分析公海客戶價值與行為，補全聯絡資料並產生更適合的復聯內容。</p>
+          <div class="key-points"><div><strong>主動盤點</strong>識別高價值沉睡客戶</div><div><strong>自動觸發</strong>生成下一輪行銷計畫</div></div>
+          <div class="visual revive">
+            <div class="revive-panel">
+              <div class="revive-head"><span>盤活老客</span><i>AI 客群分析</i></div>
+              <div class="mini-kpi"><span><strong>待喚醒</strong>久未觸達</span><span><strong>待補全</strong>聯絡資料</span><span><strong>可行銷</strong>高潛客戶</span></div>
+              <div class="segment-row"><b>高價值客群</b><i></i><em>優先</em></div>
+              <div class="segment-row"><b>近期互動</b><i></i><em>跟進</em></div>
+              <div class="segment-row"><b>L2/L3 公海</b><i></i><em>召回</em></div>
+            </div>
+          </div>
+          <div class="step-tags"><span>價值判斷</span><span>資訊補全</span><span>個人化復聯</span></div>
+        </article>
+      </div>
+      <div class="reach-foot">
+        <div class="reach-note"><strong>完整閉環：</strong>AiReach 找客戶，CRM 談客戶、管客戶，從獲客一路銜接到轉化。</div>
+        <div class="orange-banner">找客戶 → 談客戶 → 管客戶 → 累積企業專屬行銷資產</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P5 ┃ Product 03｜Smart Assistant Agent -->
+<section class="page report-section product-page" id="saa">
+    <div class="section-head">
+      <span class="chap">SAA</span>
+      <h2>Smart Assistant Agent｜懂國際站、能推進任務的 AI 工作台</h2>
+      <span class="sub">店鋪診斷 × 內容產出 × 任務執行</span>
+    </div>
+    <div class="saa-body">
+      <aside class="saa-hero">
+        <div class="saa-brand"><span class="saa-orbit" aria-hidden="true"></span>Smart Assistant Agent</div>
+        <div class="eyebrow" style="color:#ff9d5c;margin-top:28px">ALIBABA.COM AI WORKBENCH</div>
+        <h3>從「只會回答」<br>進化到「能做事」</h3>
+        <p>聚焦 Alibaba.com 店鋪經營，理解您的需求與店鋪狀況，編排可執行任務，再把結果交回給您確認。</p>
+        <div class="human-agent">
+          <div class="ha-row"><div><strong>人</strong>提需求・做決策</div><div class="arrow">⇄</div><div><strong>Agent</strong>編任務・回結果</div></div>
+        </div>
+      </aside>
+      <main class="saa-main">
+        <div class="saa-thesis">
+          <div>
+            <div class="eyebrow">AN AGENT THAT UNDERSTANDS YOUR STORE</div>
+            <h3>AI 找問題、產內容、推任務<br>讓<em>店鋪經營更有節奏</em></h3>
+            <p>不是多用幾次 AI，而是讓每週經營都有診斷、有優先順序，也有可追蹤的行動清單。</p>
+          </div>
+          <div class="saa-pill">人想創意 → 下指令 → 看結果</div>
+        </div>
+        <div class="agent-flow">
+          <article class="agent-stage"><div class="num">01</div><h4>看懂店鋪</h4><p>分析店鋪數據與成長卡點，找出商品、詢盤與客戶經營的優先改善項目。</p></article>
+          <article class="agent-stage"><div class="num">02</div><h4>產出內容</h4><p>生成商品、圖片、詢盤回覆、RFQ／商機與行銷內容，降低重複準備時間。</p></article>
+          <article class="agent-stage"><div class="num">03</div><h4>推進任務</h4><p>把建議轉成可採納、可追蹤的任務，依節奏執行並持續回傳結果。</p></article>
+        </div>
+        <div class="capability-box">
+          <h4>國際站經營能力<small>從洞察一路走到行動</small></h4>
+          <div class="cap-grid"><span>店鋪診斷</span><span>商品優化</span><span>圖片與內容</span><span>詢盤回覆</span><span>客戶背調</span><span>沉默召回</span><span>RFQ／商機</span><span>經營週報</span></div>
+        </div>
+        <div class="conversion-box">
+          <div class="conversion-head"><strong>從流量到成交，每一環都有機會流失</strong><span>SAA 依店鋪訊號找出優先改善點</span></div>
+          <div class="conversion-chain">
+            <div class="conversion-step"><strong>流量</strong><small>有曝光，不知道誰值得追</small></div>
+            <div class="conversion-step"><strong>商品</strong><small>產品多，不知道先優化哪個</small></div>
+            <div class="conversion-step"><strong>詢盤</strong><small>忙、時差、英文，回覆容易慢</small></div>
+            <div class="conversion-step"><strong>回覆</strong><small>第一封寄出，後續沒有節奏</small></div>
+            <div class="conversion-step"><strong>成交</strong><small>人力不足，商機沉默流失</small></div>
+          </div>
+        </div>
+        <div class="waste-grid">
+          <div class="waste-card"><strong>商品浪費</strong><span>已上架，卻沒有持續優化標題、屬性、主圖與賣點。</span></div>
+          <div class="waste-card"><strong>詢盤浪費</strong><span>買家需求已出現，卻因背景不清、回覆慢或追蹤中斷而流失。</span></div>
+          <div class="waste-card"><strong>時間浪費</strong><span>已知道經營問題，卻缺少人力把改善項目真正執行。</span></div>
+        </div>
+        <div class="saa-foot orange-banner">SAA 協助接住國際站機會，降低商品、詢盤與時間浪費，讓每一份投入更有價值</div>
+      </main>
+    </div>
+  </section>
+
+  <!-- P6 ┃ Product 04｜SAA AI 市場定位 -->
+<section class="page report-section product-page" id="saa-positioning">
+    <div class="section-head">
+      <span class="chap">SAA 定位</span>
+      <h2>SAA 的專業定位｜不只回答問題，更懂國際站經營</h2>
+      <span class="sub">AI 生態 × 外貿場景 × 平台任務</span>
+    </div>
+    <div class="ecosystem-body">
+      <div class="eco-hero">
+        <div>
+          <div class="eyebrow">WHERE SAA STANDS IN THE AI LANDSCAPE</div>
+          <h3>同樣是 AI，關鍵在於是否懂場景、能否完成任務</h3>
+          <p>通用模型提供知識與生成能力；專業 Agent 則進一步理解工作情境、調用工具並回傳可執行結果。</p>
+        </div>
+        <div class="eco-core"><strong>Smart Assistant Agent</strong><span>阿里巴巴國際站 AI 工作台<br>聚焦跨境 B2B 店鋪經營</span></div>
+      </div>
+      <div class="eco-grid">
+        <article class="eco-card">
+          <div class="eco-head"><div class="eco-icon">AI</div><div><h4>個人 AI 助理</h4><small>General AI assistants</small></div></div>
+          <div class="brands"><span class="brand-chip"><img src="data:image/webp;base64,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" alt=""><span>Qwen</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRmYEAABXRUJQVlA4IFoEAADwFwCdASowADAAPikSh0KhoQjjPgwBQlpABOM/B38A+Jfof43fuXumfoJ/FvpZ86/HD91v9brBf8S/nn5KfuN/ac4O+I/178ffzI9DPuK/xm9xX+2fkntAH5M/0X9g/bf/AfRb+e/6j+5/kd7MvyL+if5v+/fud/fPsD/jH8t/vP9u/b7/Af/b/tfcB1Jf6kMysYpDaw+rbIZd4nuj5XlLYvXBdIInSbcEMA4YAEblHiYutXfDRHfQPGu4Az0RpKqi9MtlPr6aOAD+//7OAR/1C55H/XIDmoG6QmCbXhhU2QnSgXJsOQPs4xxofxTYChp5B/EjXCot7UbVcpr5uDpC6Euhu4SDmjBqR3+z+LDfJuiSwLyBlc/3C7VH1uoN7MVmVp86mGlAZAsEEpKsYTG7czhGyfHiOU8ePCoj0TlEjH60gQscLONoReFlUqsYHdutp7DAbZLgDi9kthM8rd0HDdUwsHVHhz+tjfGnscr1ewVzmtx6lmbh3vgEV+x6jHlXL1CSkk/J2JwNf/+Hl2IWfQLFOGNiRpu1gl3Iii9nlgpl/85CyzXuNr26Qb7AUCpp5LAiVfnssIlP4tKLO1vZ4whlYk9zvKRaXh9Q2624tPV1spu8/Bz0tGapJvy/8IRzKMb1UnWEG/bi0A6UD7pqNdKcuaiMU8gD5fjr7bxPEh42k36vvrL+jxVbI2RpWmm9KHMJoM+0w9Ir2H/CmXsTj51fe4OuYtY2JhZ8tukEq08bvoJ5FqAf+Kax2ZzVmDqFIMfU+J9ke1+FNDeMknS0Gl3PpkPBUAVmCP633nFI8WKCUODXUscOiQGHD5pFxoub9lyUZljXVgNGrAnGo31Ddh3ZohxnRdS8oNE+BrKf3DD+W565oIHjnDNX1yYc/ntN4mBiGxtwAQXz2uw3iDQ3qCal1/2Dke0oBKA5RK8XHkg2qEb9/FxMD/Gh29eHzjLULQcsTIMWjtD46Q0Ty43cd7/1lOeVFhAK+idDTA9ndKRy1ElzxM7wRqvxwKtNONGEebfZSeWdIiWl1FHZtC86bzYgLeg0JiqMCtI36RuAnzcXXYDoRu4QNJTDOj3+RJNlHmyFdIjldqDet/8eoeHGL13rN1jiyO6ToUiedqicwX2hwr4Rsbpnz0Zb0qoMrJu/4oewjH3RBPsgDiqxeneMX76B53Z908dR4xBdulwWX5ix/Lfw1eH/ubMDw/aMUgh2bOZ/9JE9Ny9WVsoo8ErfmKmH7FfbG3CmX//v7cWWphRzKGTPaVln/AluOxWvCWKF1qYJOaBxM7qnp0qvbKPmomu1Am3VemQLKguryuoHvAE9tBlXS3bnaX1VHE6vRNpi/BSa/yieEDXlsA2clghKrJJ5HThyugGa2DXytSIZ4NzTA0SXau2lmcJQtc7oTyr/HAu5lOdwKSNVg6N9Zhi233KTnVhFNt54mLcA1XcC9/mj0Obj+Q+sbPjccafUS46awCIV6zA8mAAA" alt=""><span>ChatGPT</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRqADAABXRUJQVlA4IJQDAAAQEwCdASowADAAPikQh0KhoQnKkgwBQlnAB2jXkKXNXwR7/fiX2Aziv2J+7/ln+R2sG/yn/K/kzlunz//J/jxqnP+h4waZD/Uf+T+QHyefv//a8mvz9/zPcF/ln83/2H5r/E564/RT/Z5cn3hH4uC5mP1oydOtjT19k1RDiyeMmEM3SwTwWc2N/GNc06f/RL+H/uoxrpEBga3PWRsCSWBJAAD+//7Ho2bmHmDVezfX17Sn45yKIh1c4fCbto+cQfIX1wg//z67/ThblQRypc/51Pkm/KtPvF6Y2F9iwO7P+fJMZ3JLqbnORFnow9KoOQ26hx5+7ONsj8PSk0GJN4+DunlelJPY+8n7B7vAs0OTPo38L/GFN3XaR+UB7pilopV9xJt7jgWX4+LiINRHiqn0ueyCJr66z//66D/05/8Gv/lT9ev/9Fz/eYOWsVb3Oe7HpVr//87//5zH2v/wWr+P/5zv+58u+blpGBOElvKYTJVsRdw1lyxykx59CZ8a/VrhHRwNiZJ/OpGdYkg79Pr80nOU9uubT7YMxUXC2JeWEt+9hHawGBadnpg0Cm4mDZCZcoD6S5cGPRtWIiXK3VhakqM/qBqzzN7UEJtAXC5V51SpKv9YOI4ahmwZFbL0NAXjAKzf5ZEc76cuZI2jgk+HfcM3Z5moeq1b5DkSiZrFpsw0QHqXEE5WaRra3j2HR/kyCasEHMlwXVks68dQ4mbpK8xrz2ZL2cL+JVy85w4aa0xkwR6FCs7OVyRzS3nNEDwGGghrYCD8A2JUF5hByCzR6fP/8VGN2+jukzp7e2lnbwfI6iV7Ht3jKanpgN8ZyFq4UNCFHVBL6pnRByHxPm/LEsEdd3x1QqOb4l4ncd4dlIIsrbfLEgiAX7HjXYR8WQQmrTl4EWsSFALFlXYhwy2kpTZvuKdzs/mDZIQKiIJBcLsyU47Yppoq15208JHDsrmHXKbXb/sqBe3Gy0/DBp+fPr6WqalgCmcAITfa6t5jJlw52MKZodUO2xADQ5vZeWWgM23WMzSWEcWkAvP+BaXseiZc9Y4ssYDuAPbt0bK/ReeHbFVE44SChU9b/DERyFOP6SCm2JGW9nGqPX0aewmV4vBFFC9FaSuiUN/kfbjDdbdPynuFdfWHtAQ5WJnmM6lq7J3QxNATNlBLCKvphmY3XdpDKqQYhuhAcTtLfcN3bxD+/5hN4zR5Ao55z7ael7b3KgAA" alt=""><span>Kimi</span></span></div>
+          <div class="eco-line"><strong>擅長什麼</strong>通用問答、內容生成、知識整理與靈感輔助。</div>
+          <div class="eco-line"><strong>工作方式</strong>由使用者持續下提示，逐次取得內容或建議。</div>
+          <div class="eco-gap"><b>主要缺口：</b>不了解店鋪現況，也不會主動推進平台任務。</div>
+        </article>
+        <article class="eco-card">
+          <div class="eco-head"><div class="eco-icon">AG</div><div><h4>通用工作 Agent</h4><small>General work agents</small></div></div>
+          <div class="brands"><span class="brand-chip"><img src="data:image/webp;base64,UklGRjoDAABXRUJQVlA4IC4DAADQEQCdASowADAAPikSiEMhoSETnAQAGAKEtIAIqn9C/Gb9t9Aj9ffoH5HflhqF/7R+Qv5AeoBsJvzH/G/kPqjf+P/IjXa/6r7gPjW/qPyq/sHuD+ZP9r7gf8h/mv90/q37u/3jkQv12T0X4EPZoM+DkNe/Agjn3utKQQjBrSEb5rK3UTt6twdj3+PCl81h2UPEcsR9OECAAP7//pSaA60X9uvqzuwY7Mb+Qd4Tb2BxvYTElAx2TYn0MtRINmVjxtxL1Af/x4/JoMmpA3uk0b6/gOn2JBLWtkqepbB/3G3pzLBvC42T1gaHSNRSll8m0B3UkpMj+55hfbD+O8/x6/Gw3CfTjxqfQl79NilIDWKTf8KmSMAm2N+GC/Au5d7T6Lg+2zuZAgx/meA3f4O3m5oW+T5GBD6f+ErF2tcRQtpwsVl5YTneQ3J0qFnLNscZUg4sWX/WYx+yLQAMMLRtYoBmEmunfvRcWntYY2rIYLv/dQfJPgRihnVFMCLpcneJZg//8I/dc553Ohe3Jq+QGKC6q/5pORQrAewaUy2jkUsQ38MCYI//Y+7hrvSKHIvi41OFj8wusohdbPEcHF9gnXm8K9GtT//zcYkwgmVAlRLcriZekiSdouLDNo9SMky/Otdz11s2nZoJGtZnzB371arIHfEwxzNhuHZ7dHV/hhR35NLeg1Ja2yzzAEywLJXNmHuIPV4ZoT8KdwfK5M0CLbCgcFWJ3QvR2pR3tZG3HSCqGIxzUf+s/CTIS4S+7GG3mP+w9jT+0AJMREOfnW5U6YteLAhpafTHzJJ+AYG8WJGDN+nq6v+p3HkRzs/SeJ6+XYXxtJPTQbGCD09PCyf1FVfRYzi0V0N86IbkWznnbphJHJUAUfMA3Qm925LJljFvMNtqqyWFy+5PKYxqYJIJ4/aEqrgKif1nIbChS1rnwnfggCX8agfgUaHuzjjZ4eAGJNkeDr6b7xg/R//8cpDtIZadrrLvrpbrVHQLX/g3fi7gcdXIgdt0Q1GSEm8BlALSiIMfrDz+5dFIIQPBcLGaFMZHrQ9XPL9IqlhskZEnJUdTFmcLU/2el5h1b1elKAAA" alt=""><span>QoderWork</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRgQEAABXRUJQVlA4IPgDAABQFACdASooACgAPiUOhkIhhjrNvwYAkS2AE6ZXr2v3D8VfYip387+5v7b5X9x1/i/uA9knnDv6PugP4V/T/2Q6Wb3AP7B/ZutP9BHyjv2N+DH9hf2n9mu5YfUB27fnn2Uynb2DOR/3je0OL2imZF5Ffpz2Dv1Y/2Sa86df88pv4nvV/IE88wooZlK5d+iBfYCq+/XoBde6mcN/hlPWgZQoz9NptxFCx0wJMQAA/v/+h4hz2Dfueuv22d7X2cxo1sNf8kc9Dx0LMDu/1mtN/2v5GUkqaVTgsy4YTZeKOYaCM0R+nJQhuf2ma8nYLCbfe2t3whk4RNzkAtwH/rNas3r9XC96/fx28xioaYyX72R4hv5pvhBXSShC2Bh7wg15qsPiJhb/DxfPMyKTOyBkOW5l7kbB+c5RMEEUC3fJ3OgVFi8aaP/vv/7gIOHGLDBFTYsZPZNh5jzriDNK+Bv+Hni+lkryjUg/3gawGviNdkTdZXMrhwFnUeza5rD35Phe3AdAWBr7Ev9/iB19m/vEYq4Zm7TwwepZfj7xrHuebWtrnpTw+18Qj+2GhkyvClu7H6bVrJ5eB+nW08BbfGtbEgrWyp+eOt6KtV0b0YTQDjz4CmcGHv74+rXa1ee8ft+wTHLWnzUc71K3on9zo1gS7m9WfkBtJMfT9AsM+RhCvMIB06tKEm7VJQXUg5UKOwvMYcd0q3+PXrbm/dmHUiPYV6GdzMT7aXs8Ug9a9CePPqPQ/yrP2G+9M3bxl9/WxDuLU1f+pCgkSDbJH6ycb+G/Cy470icvmOGNEgTpqm/r+I4xBpWpnaemuFDZ5FWdudWclf6yXI08DM5opEi7QijbB2NeblyLcil1P788WneGwsXaeSprUdtCauyDJaRlzfq/yfqt4vWqXcDqoDjYizG6N6Qqw/2Qml/LrY+Lgr0c0feCEplrnruw0/8gmTN6Ne2o8+urS1boj3HlguIYMiyF4TL9IA9oLS5orUMgvrjgkf33ITSOCQ6mRAmbv/e9L/KnwcnnLWHiVN/qFHZZxKwvPZj7Nip+A4t372UY5Wau7Zz7LwE7LL/1QXuuHA856cPrs+bEcHVbp34fRj4oWNG1ZOqFqr7qM7RwgvpUquU7/IgjlQgSLGtjDujfCeGY3toAdyymi+c+lOllIie9sCJd7iooC3TtjLtlOSvNPnyapT4hlWRcmiI2wwkUtYOLidklw1BFyiDulAlvwT9CDgCZdpNPuVyn9VZtdKoSoDbcZGVdv2fIBdJ45eT731jxLhb/Kdr5ztTUZe568ID3XE7NUQES/M/H/JkWSWrBX/h2EKtWzDj28UIgvAiN07ORp0Gpy+PRYPaR8xQAAA==" alt=""><span>WorkBuddy</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRp4DAABXRUJQVlA4WAoAAAAQAAAALwAALwAAQUxQSJgAAAABcBtJkiLNoSEPbvHbubvWnHTrAHWLH99/JEYEA7eNFDXLzHdvsNa6u5sJ/gg4+09nrbV2dZThrtbaaWKpUAi1cDrZEJgoIzGMbxYKKbwFVKUqfCSUAiM3DHCPwcY1hi1KhG5M2IO2IKqKLTpN2I0XBTxE4JsioQyB0au/s+Gm/o6/R/V/wiD/D/nHf05r3cdr/qPcvbPWAFZQOCDgAgAAUBMAnQEqMAAwAD4pEodCoaEI434MAUJaQDOfEAOkBztHa31S/bzQDfSP5/+Q/7QaZL+f/i3lo/yz+8fjJwIH2AfAt/aPxs2Rn+lf4X2NP3D++fmB/gPZH+S/2X/Wf3D4AP49/PP8V/Wv3F/wn//+nT17ejN+qpqXDLUhxKwwq2RtNsRFER1XA5BbUkfYOsoCEc+ZIJAA95K3B9GB5eJcSFUoAAD+//SjN4ddkrsYNN7D8AjyuFyvSLp0w/hFf76baENz0NUCMbJQQDUnrzoKntH6Gfew7juTVdqN36PrFdee+QqWbLwYczNcgcN97V7hJPAcW7m93uo6CF8c/vdgJKM00W6ZkLPn//P3oCbmwEyYITXlBnRL5bKdHTip/cYLoHkLiNcdURq/4v9c6blLoEXuPKaLJbPjEB7CQFlK9OTOjc540vQkGN7ZKCI54c5LfAEmO4mr8WiJpFZVlJVrAfmgBpfM50b+3SkCS7ZmQzK6W80rjLU7n/QrrhUFYnTilxxSvqQmzZOAHU5QWJVoj+7NNhHkaEncdYa/uG0T6OvNKncVpQtWmfM1k1dO9NJzhgTSeX3ndLACUvEPgJ6Ja6LpnI+MCYcHNk/Igd3jzoViMDYKNb7COHDDmpbaLHkzPWSvEFNQ40Eegk6sg3UQn1jFrmngxNqi+e//+jjVr0vC3QkMHZAEHEr+0ow+VSizWyQncVFJSzoJ05o/01LAU3TeZIZ5CDngQZNoEkDn6OaGaWZX0NKhjJ4ecnHn2X2e8OvYpENTv7OG9ULRUMExzT0O+NtQoziRlT0ERICBpXGCOmA7M7Q3vdmSyM6L4/P8rAlypBfBZEFY9aWZ++K2ftoj5On+ltIyZYV+5Ar1KlRQgiZaBcM35TvKBbbsQkZIKrxUWip8C2TS7nB/pMZ2nWnXID3KbW55CP9bT6Ge4yaeAAXZ/x7CgpEH+ZJeZJvTxCr0au/mDlvCasjzKYAAAA==" alt=""><span>Manus</span></span></div>
+          <div class="eco-line"><strong>擅長什麼</strong>跨工具蒐集、文件處理、研究分析與多步驟任務。</div>
+          <div class="eco-line"><strong>工作方式</strong>理解目標後拆解任務，使用工具完成並交付結果。</div>
+          <div class="eco-gap"><b>主要缺口：</b>缺少國際站店鋪資料與外貿經營流程的原生理解。</div>
+        </article>
+        <article class="eco-card">
+          <div class="eco-head"><div class="eco-icon">EC</div><div><h4>電商垂直 Agent</h4><small>Commerce-focused agents</small></div></div>
+          <div class="brands"><span class="brand-chip"><img src="data:image/webp;base64,UklGRsQDAABXRUJQVlA4ILgDAAAQEwCdASowADAAPikQhkKhoQqtVqoMAUJbACdMt7BQQP3779cTCWLOA7Ue2Z8x+6Af0T+jdZf6AHlseyP+1/7X+2HdwfxrlCvZHOFfUr7nnIv7fvBGOdCq42GDd6Tv+T5lfoj2D/5T/Uv9/2AFoIUDwHUnX26UwMOpGP9u7I23rKPuteUbJjK7raraQf+8Qb016obSu0Vje4JaFBDt0v8AAAD+//7OCT1Ptfp0itHTFmFcN4UDfXVCLn/uT+hA+qv/iqDH/yP/ivm3e/ahTaHUef5wHTEo8kvCDrIgWe5Ox0+k2nzyuJRRfigM4BxDzii/lL3qfFj9PKnD9Yd4vzGrjEXkbD9gJfcNie0c9b82HUIPXX6SXHmU33EJPsSRH6083+ImaJJy9Qz8HNreyQPyp4+7oUXoMG69yrKcUZ/M+nHq8AdpGk9a97tvOZFwTR0j0Ms1ud+KbArShTTL1T9UPAdF8IfW9Sx1QQXqfyOXXvQtBCBpYUXa+Q2K2Zv4MKG7QDt9mj9tfIUQe60fH7k2zHrLGZ8CHbwY/AXeI7MRksS89u5MKNB/1g8Ctuz3jpkyqksF8mZt+vKu5UJcevWrFvvpfa030r+BKgNo23aMyVszc7Xv1NKjNM8AIq0E4NPHP2iWC1IX/3HRH6XbDTteIspoxL8dqUWHWFcyFM06RLZ7p1sO+P+9+31bn7+vdAw+2VcpebpaM4WQ+IouTGGJZmn22vjg3wKCbOvOru+sW0cikuFq7tT3MgDb1MLqLpXL8SQPOzLtKFXin+cWghTlP0B8sc3JMwFJbQ9TUbffPrUVWutMWq4Zc6MXFDOcI+tuHF4CfBkT/3p+6pVJyNZPjt9BpszLowDub+D262X0Rqmr+Ye5/TNHt3U4yWmJCAnS1C8ZRpxqkKE8km6nZH5RM7UjqiLb+lYMRqqelRN4ycCConvsBB6FWn5hgb2pUzJ2aueuKS8m+Jgf/T3G+EPfw+DVagliug0E12eSsYwUdOv6Sf8lQtOmAtXBr/qWvMTjRw8//RwgyqY1Ne62PuG2O0+sXecmkmowkdkNowemEobzssDEO+tm2Rukc/zTplmd8wwgh0I+0OmkOPon7Pz+BZiTndIFKcoccB+fKzs/onmQf1c/rVuyE1UHx+IsmWZj1hUKiphIDYr5UyjvEiN72GcV0VTJ9v8/4c0K+7ciG4jo45RjFwNwjxWPtmjL5//MSJiyH//za4wGkaeyZYTKr3kLQjSntuqRiyDsgM1UqfbCvQWdAAAA" alt=""><span>Shopify Sidekick</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRiYCAABXRUJQVlA4IBoCAACwDwCdASowADAAPiEOhUIhhqtVqgYAgS2AFv4xv8A/ADrAvodJ/Br9ct4Bkk/Kz+A+wD3Z/yD8buog+1XgAfwD+X/472//QB5AHAAfrd1nP7lejH//80AmVH46Z8D5ZstGgw7+Z/4X8xxb6zkMeTF3WdOQdTL/U1wX6onwWAmnIxIvXoergAD+/QUOG+AP7/F+xQGqf9tbhqId2pf+TW/ijrzuF94jK8AUVsPtTU6BiEbbZiDw5iLERqDN1A9OOm5izNhZnILe1vdwJ/ZjsgERf9zxB+fEf0GxA5QSSVqj6QnVxG9gfP9xObi09YpeztAt0MJHqW9SFvUOA6Pzhe/YxMkzp7JW05JTjzoi0dvJ+e5VmZ9/QuYSgRxXWvwPLaSoPBbS5ef8k76zm4OD8fGtX33KRYAb2ipOSinBtFGf7NbJpsneeZiEx3eLXPTBpvBSR3CJMBQTlfq1+1ktiy3O8qjwgB9NaL9S9P7XB2oxoywKpBzlqsbLIh1vIphTU4M/cqL8hREuRWAAyNYyyLiGYtg8xj/Lh+rI+9dhenpvXyjDh9a7D1DRty/1Z9MHP/rS5VP1IcujXcNI/7Ez1h3//LcgFpg+Cn/he4H7+0TP+23//C7XnG6Uop0wlmMrs3rMMfMuwjGXnjnay1L27W3/uIpPGxMe7G5cup/tP/ycLUT39Y+GiE/C3f7F36bcAziuMg3/MMeAAAAA" alt=""><span>Seller Assistant</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRiQCAABXRUJQVlA4IBgCAABQDQCdASowADAAPikOhkIhhjpnvwYAoSgDGpB3LgG4A/VzqAfpB6EvAAfwD+AekZ7Bv7d/tH7Q3//eED8VZ0B/RvyA/ECtV/2b0zf7fy7/LXoh/59Mb+BMt8xrK3bCBKvAmC864AbfRnJpcAB6483c6rwAAP7//rWcJ/rQU//oHQCYs8hhdEbbuOpf+K/atW3tq5D2wXJASPzCdjkAGbn+/8f2Tc0S+La9xitIYfSXZiE1+JEbfhtxDqmqo/87/y9WaM/4hAqvthWT9/uK8LxvCM4mKXFZfgJQCwiQ/4IHtYen3HH7nw9lr5pp4GNr/EEiG/HzLhGtSz/ip52o4uOHft/dBuFYkVkcPSO6b//rz9meZgy+/NVe+0C1YkL5+k36wKzpIKRZxBE3Mt2GqI9UGeJv4TsJKbDnGvPL7hagSG//wWWU718dRQc/Km/Cjv6XDGWapmhvYgcs2UM/NlnB3w8ssSRPhc7/8z7TezEYx+w7YL79ftccvTd+h4kAs94Q/bjRzbHsxB0R7Qvk/dKMfhR5fxr7AbePBd4cquLu39mUpmAO1d2IcHBP8HlT//zmMh+NPfM/4oWA8DyleuSktj4ra+fv/im07mStbXbydPQ82suoeggs7Jzuxp/5QHf3MapIu9++bVbT/F+/Sc2zKX3WXX6EeNDwpqVvUjSz5LcrAAO5cPmwWsct79G1aHdWP2PX3R+wAA==" alt=""><span>Gorgias AI</span></span><span class="brand-chip"><img src="data:image/webp;base64,UklGRpwCAABXRUJQVlA4WAoAAAAQAAAALwAALwAAQUxQSJYBAAABgBvbtqvm/HeR7QFPJK9ioAJymyJVAXLVuEyjHkQDcphI/92D+4/3bwURocBtG6U7Ztz6BgTFCYDT9tPrZKo6nbw+tU8AiEOkJAKU+s9/DMrfc78ESBIFB9RHXyR96nUDXS+A5NeoDsQUCo6Gv+SmLiOZKvJneASJ8Nfv5L8yQvSffL+G7PStWSYVmZi1IDt8j0yZQ1KyF3QFdOiVuUQ9uygE0s0tn9s1M0mHy4V65hav88utSRN3/MG1N3D8OHYJIBiGR8s32BACl1RmXm2gflZJnGC8ia2iEQTFX93E+bttyvWnCPTXsQm2owEKL+otoJkZnuVkRjWAZkeanrQzi7AahO0npgbQUOenN3rLwPNtYpHR4Ao+p2Q84lb0p1kYeao9zDNT8yYTk4E0PJD9O7F/h9bvfHYqpv8o1Rex/qd92OsBwchSz4whLilP7fTYtJI4cz1pr4e39fzcTs+b25GwncqZ9Ft2ytwOmttZczsewxNuonnC3+0RJJKHjON4yLgBuGieU47hOeVdPCcvjzrdzaMAVlA4IOAAAACwBwCdASowADAAPiUOhUIhh45BAAYAkS0gAZiB3kv4q5W7/M+T71A/I74Kf8ibym0/Clav9V1vBSBnX6j2Q+u1u3gtvAAAAP7//pQiH/7z/9UR/zPudfP2HwGDgp8ufPP34P9Hf+PVSmXs/0Zt1awJvxf7JegMj4EKEi47YHkE8rHABrI0Avb6cvFJMAj0RHojHRxbaKN4i54V0xuKsaPR5Xpfeu62k0XgQOs0/MeYnqeOqHTLEXiR1/Dz/z45axG7ScdtLSyLkOgDWwC+GTGj+Eaxy78IQfBbG/o1AAAAAA==" alt=""><span>Klaviyo AI</span></span></div>
+          <div class="eco-line"><strong>擅長什麼</strong>店鋪營運、客服、商品與行銷自動化。</div>
+          <div class="eco-line"><strong>工作方式</strong>圍繞特定平台或環節，協助處理高頻電商任務。</div>
+          <div class="eco-gap"><b>SAA 的差異：</b>連結 Alibaba.com 店鋪、跨境 B2B 知識與完整經營節奏。</div>
+        </article>
+      </div>
+      <div class="saa-foundation">
+        <h4>SAA 的三層專業支撐<small>不是單一模型，而是場景化工作能力</small></h4>
+        <div class="foundation-grid">
+          <div><strong>平台資料</strong><span>店鋪、商品、詢盤與經營表現</span></div>
+          <div><strong>外貿知識</strong><span>市場、選品、營銷與跨境 B2B 經驗</span></div>
+          <div><strong>任務閉環</strong><span>分析 → 建議 → 執行 → 回傳結果</span></div>
+        </div>
+      </div>
+      <div class="eco-foot">
+        <div class="eco-note">以上品牌用於說明市場中的 AI 類型與能力差異，不代表與 SAA 存在技術整合。</div>
+        <div class="eco-tag">核心定位：能幫你做事、懂國際站的 Agent</div>
+      </div>
+    </div>
+  </section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P7 ┃ Ch.01 產業流量與市場概覽                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.01</span>
+    <h2>產業流量與市場概覽｜Auto Repair Tools × Automotive Hand Tools雙線觀察</h2>
+    <span class="sub">數據區間：2025/06 – 2026/05｜全球市場</span>
+  </div>
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Auto Repair Tools 近 30 天 PV 指數</div>
+      <div class="val">8,219</div>
+      <div class="delta pos">YoY ＋6.0%　近 12 月均值 7,617</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Automotive Hand Tools 近 30 天 PV 指數</div>
+      <div class="val">8,764</div>
+      <div class="delta pos">YoY ＋11.9%　近 12 月均值 8,031</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">行業景氣判讀</div>
+      <div class="val" style="font-size:22px;">雙線同步上行</div>
+      <div class="delta" style="color:var(--c-text-2);">北美汽車保有量持續成長，平均車齡超過 12 年，維修需求穩定擴張</div>
+    </div>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="trafficChart"></canvas>
+  </div>
+  <div class="insight-box">
+    <strong>解讀：</strong>Auto Repair Tools（Tools &amp; Hardware ＞ Automotive Tools）與Automotive Hand Tools（Tools &amp; Hardware ＞ Hand Tools）兩大板塊近 12 個月皆呈穩定上行趨勢。Auto Repair Tools PV 指數從 7,757 →&nbsp;8,219（+6%），Automotive Hand Tools從 7,832 → 8,764（+12%），反映全球北美汽車保有量持續成長，平均車齡超過 12 年，維修需求穩定擴張需求同步推升。CMI Continental「精密套筒組、棘輪扳手、扭力扳手等 3,000+ SKU 汽修工具」產品恰好對齊兩大成長賽道。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P8 ┃ Ch.02 買家分布｜主力品類                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section p8-opportunities">
+  <div class="section-head">
+    <span class="chap">CH.02</span>
+    <h2>買家分布｜Auto Repair Tools全球商機份額與成長動能</h2>
+    <span class="sub">阿里巴巴國際站 Tools &amp; Hardware ＞ Automotive Tools 商機 Top 10 國家</span>
+  </div>
+  <div class="opp-hero">
+    <!-- 冠軍卡 -->
+    <div class="opp-champ">
+      <div class="lbl">CHAMPION MARKET</div>
+      <div class="flag"><img class="flag-img-lg" src="https://flagcdn.com/w80/us.png" alt="US"></div>
+      <div class="name">美國 United States</div>
+      <div class="share">35.05%</div>
+      <div class="desc">
+        全球Auto Repair Tools商機份額 <strong style="color:#fff;">第一</strong>，佔全平台近 <strong style="color:#fff;">1/7</strong>。<br>
+        市場規模 <strong style="color:#fff;">$238.4B</strong>，全球最大汽修市場。<br>
+        ANSI／ASE 認證為進場優勢。
+      </div>
+    </div>
+
+    <!-- Top 10 列表 -->
+    <div class="opp-list">
+      <div class="opp-row" style="background:#fff3eb;border-color:#ffd8b8;">
+        <span class="rank">01</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/us.png" alt="US"></span><span class="cn">美國 US</span>
+        <span class="bar-wrap"><span class="bar" style="width:100%;background:linear-gradient(90deg,#ff6a00,#ff8c3f);"></span></span><span class="pct" style="color:var(--c-orange);">13.96%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">02</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/in.png" alt="IN"></span><span class="cn">印度 IN</span>
+        <span class="bar-wrap"><span class="bar" style="width:63.8%;"></span></span><span class="pct">8.90%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">03</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/pk.png" alt="PK"></span><span class="cn">巴基斯坦 PK</span>
+        <span class="bar-wrap"><span class="bar" style="width:18.3%;"></span></span><span class="pct">2.55%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">04</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/id.png" alt="ID"></span><span class="cn">印尼 ID</span>
+        <span class="bar-wrap"><span class="bar" style="width:18.0%;"></span></span><span class="pct">2.51%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">05</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/ph.png" alt="PH"></span><span class="cn">菲律賓 PH</span>
+        <span class="bar-wrap"><span class="bar" style="width:16.0%;"></span></span><span class="pct">2.23%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">06</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/br.png" alt="BR"></span><span class="cn">巴西 BR</span>
+        <span class="bar-wrap"><span class="bar" style="width:14.9%;"></span></span><span class="pct">2.08%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">07</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/tr.png" alt="TR"></span><span class="cn">土耳其 TR</span>
+        <span class="bar-wrap"><span class="bar" style="width:14.5%;"></span></span><span class="pct">2.02%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">08</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/vn.png" alt="VN"></span><span class="cn">越南 VN</span>
+        <span class="bar-wrap"><span class="bar" style="width:14.3%;"></span></span><span class="pct">2.00%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">09</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/mx.png" alt="MX"></span><span class="cn">墨西哥 MX</span>
+        <span class="bar-wrap"><span class="bar" style="width:14.2%;"></span></span><span class="pct">1.98%</span>
+      </div>
+      <div class="opp-row">
+        <span class="rank">10</span><span class="flag"><img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CA"></span><span class="cn">加拿大 CA</span>
+        <span class="bar-wrap"><span class="bar" style="width:14.2%;"></span></span><span class="pct">1.98%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成長動能 YoY -->
+  <div class="opp-foot" style="margin-top:14px;background:linear-gradient(90deg,#e8f6f1,#fff);border-left-color:#0a9c5b;">
+    <div class="stitle" style="color:#0a9c5b;">📈 Auto Repair Tools商機年同比增速 Top 10｜誰在加速</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px 12px;margin-top:6px;font-size:13px;">
+      <span><img class="flag-img" src="https://flagcdn.com/w40/th.png" alt="TH"> 泰國 <strong style="color:#0a9c5b;">+11.4%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/cn.png" alt="CN"> 中國 <strong style="color:#0a9c5b;">+4.2%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/mx.png" alt="MX"> 墨西哥 <strong style="color:#0a9c5b;">+3.8%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CA"> 加拿大 <strong style="color:#0a9c5b;">+3.5%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/us.png" alt="US"> 美國 <strong style="color:#0a9c5b;">+3.2%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/de.png" alt="DE"> 德國 <strong style="color:#0a9c5b;">+2.8%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/in.png" alt="IN"> 印度 <strong style="color:#1d6dbb;">+2.0%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/jp.png" alt="JP"> 日本 <strong style="color:#1d6dbb;">+1.5%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/kr.png" alt="KR"> 韓國 <strong style="color:#1d6dbb;">+1.2%</strong></span>
+      <span><img class="flag-img" src="https://flagcdn.com/w40/gb.png" alt="GB"> 英國 <strong style="color:#1d6dbb;">+0.8%</strong></span>
+    </div>
+  </div>
+
+  <!-- 戰略破局口 -->
+  <div class="opp-foot">
+    <div class="stitle">★ CMI Continental的市場策略地圖</div>
+    <strong>① 主力深耕：</strong>美國（35.05% 份額，$238.4B 市場規模）為絕對核心，建議優先取得 ANSI／ASE 認證搶占汽修廠＋經銷商標案。<br>
+    <strong>② 高份額市場：</strong>德國（13.9% 出口份額）、中國（13.1% / +4.2% 成長）為重要供應基地與品質標竿市場。<br>
+    <strong>③ 新興爆發：</strong>泰國 +11.4%（增速最快）、墨西哥 8.9%（北美近岸外包節點）— 東南亞與拉美屬新興汽修市場。<br>
+    <strong>④ 警示：</strong>日本（5.4%）市場成熟但進入門檻高，需差異化品類切入；韓國（3.9%）以本土品牌為主，建議觀望。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P9 ┃ Ch.03 熱門產品趨勢                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section p9-products">
+  <div class="section-head">
+    <span class="chap">CH.03</span>
+    <h2>熱門產品趨勢｜Auto Repair Tools＋Automotive Hand Tools八大品類</h2>
+    <span class="sub">對標CMI Continental現有產品線</span>
+  </div>
+  <div class="trend-grid">
+    <div class="trend-card motor">
+      <div class="ph">"精密套筒組"></div>
+      <div class="body">
+        <span class="trend-tag">汽修工具</span>
+        <div class="name">精密套筒組</div>
+        <div class="en">Precision Socket Set</div>
+        <div class="desc">高扭力精密套筒，適配各類車型螺栓規格</div>
+        <div class="biz">★ CMI Continental主力 ✓ 核心品類</div>
+      </div>
+    </div>
+    <div class="trend-card motor">
+      <div class="ph">"棘輪扳手"></div>
+      <div class="body">
+        <span class="trend-tag">汽修工具</span>
+        <div class="name">棘輪扳手</div>
+        <div class="en">Ratchet Wrench</div>
+        <div class="desc">72齒棘輪扳手，窄頭設計適應狹小空間</div>
+        <div class="biz">★ CMI Continental主力 ✓ 高需求品類</div>
+      </div>
+    </div>
+    <div class="trend-card motor">
+      <div class="ph">"扭力扳手"></div>
+      <div class="body">
+        <span class="trend-tag">汽修工具</span>
+        <div class="name">扭力扳手</div>
+        <div class="en">Torque Wrench</div>
+        <div class="desc">可調式扭力扳手，精度±4%，專業級別</div>
+        <div class="biz">★ CMI Continental特色 ✓ 高附加值品類</div>
+      </div>
+    </div>
+    <div class="trend-card motor">
+      <div class="ph">"輪胎工具組"></div>
+      <div class="body">
+        <span class="trend-tag">汽修工具</span>
+        <div class="name">輪胎工具組</div>
+        <div class="en">Tire Service Kit</div>
+        <div class="desc">含輪胎扳手、氣門芯工具及胎壓計</div>
+        <div class="biz">★ CMI Continental主力 ✓ 熱銷組合</div>
+      </div>
+    </div>
+    <div class="trend-card motor">
+      <div class="ph">"氣動工具配件"></div>
+      <div class="body">
+        <span class="trend-tag">汽修工具</span>
+        <div class="name">氣動工具配件</div>
+        <div class="en">Pneumatic Tool Parts</div>
+        <div class="desc">氣動扳手、氣動磨光機配件及耗材</div>
+        <div class="biz">★ CMI Continental延伸 ✓ 延伸品類</div>
+      </div>
+    </div>
+    <div class="trend-card fan">
+      <div class="ph">"汽修工作燈"></div>
+      <div class="body">
+        <span class="trend-tag">車間設備</span>
+        <div class="name">汽修工作燈</div>
+        <div class="en">Automotive Work Light</div>
+        <div class="desc">LED 充電式工作燈，磁吸底座防水設計</div>
+        <div class="biz">★ CMI Continental主力 ✓ 成長品類</div>
+      </div>
+    </div>
+    <div class="trend-card fan">
+      <div class="ph">"工具車及收納"></div>
+      <div class="body">
+        <span class="trend-tag">車間設備</span>
+        <div class="name">工具車及收納</div>
+        <div class="en">Tool Cart &amp; Storage</div>
+        <div class="desc">重型工具車、抽屜櫃及壁掛收納系統</div>
+        <div class="biz">★ CMI Continental主力 ✓ 高客單品類</div>
+      </div>
+    </div>
+    <div class="trend-card fan">
+      <div class="ph">"Specialty 專用工具"></div>
+      <div class="body">
+        <span class="trend-tag">車間設備</span>
+        <div class="name">Specialty 專用工具</div>
+        <div class="en">Specialty Tools</div>
+        <div class="desc">軸承拉拔器、彈簧壓縮器等車種專用工具</div>
+        <div class="biz">★ CMI Continental技術延伸 ✓ 差異化品類</div>
+      </div>
+    </div>
+  </div>
+  <div class="product-coverage">
+    <strong>產品覆蓋率：</strong>CMI Continental「<strong>精密套筒組、棘輪扳手、扭力扳手等 3,000+ SKU 汽修工具</strong>」產品完全對齊國際站熱門品類。其中 <strong>扭力扳手與精密套筒組</strong> 為差異化優勢品類，建議首批優化發品上架。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P10 ┃ Ch.04 行業 Benchmark                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.04</span>
+    <h2>行業 Benchmark｜行業平均 vs TOP 10 對數視圖</h2>
+    <span class="sub">數據單位：近 180 天表現指數｜Log Scale</span>
+  </div>
+  <div class="bench-grid">
+    <div class="bench-chart">
+      <canvas id="benchChart"></canvas>
+    </div>
+    <div class="bench-side">
+      <div class="metric">
+        <div class="k">店鋪 PV（180 天）</div>
+        <div class="v">行業均 28K · Top10 240K</div>
+        <div class="h">頭部與行業均距離 8.6×，差距主要來自關鍵字廣告投放與 SKU 廣度</div>
+      </div>
+      <div class="metric">
+        <div class="k">海外活躍買家 AB（180 天）</div>
+        <div class="v">行業均 150 · Top10 1,400</div>
+        <div class="h">Top10 平均擁有 9.3× 買家覆蓋，反映品牌＋認證信任溢價</div>
+      </div>
+      <div class="metric">
+        <div class="k">轉化率 DUV→AB</div>
+        <div class="v">行業均 1.7% · Top10 3.4%</div>
+        <div class="h">Top10 透過 CRM 系統化跟進每條詢盤，轉化率提升 2×</div>
+      </div>
+      <div class="metric">
+        <div class="k">商品數 valid_prod_cnt</div>
+        <div class="v">行業均 200 · Top10 1,200+</div>
+        <div class="h">建議CMI Continental首年發品目標 ≥400 SKU（涵蓋Auto Repair Tools系列 + Automotive Hand Tools系列雙軸）</div>
+      </div>
+    </div>
+  </div>
+  <div class="insight-box" style="margin-top:18px;">
+    <strong>戰略意涵：</strong>汽修零件行業頭部廠商規模化優勢明顯，但CMI Continental「<strong>精密套筒組、棘輪扳手、扭力扳手等 3,000+ SKU 汽修工具</strong>」完整矩陣具備 Top 10 切入潛力。短期透過<strong>聚焦 5 大主力品類發品（≥400 SKU）+ 取得 ISO 9001 / ANSI / DIN 認證 + 關鍵字廣告投放</strong>，6 個月內可進入行業中游（PV 突破 80K，AB 突破 500）。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P11 ┃ Ch.05 台灣同行對標                                                -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.05</span>
+    <h2>台灣汽修零件同行對標｜阿里巴巴國際站</h2>
+    <span class="sub">2026/06 公開店舖資訊</span>
+  </div>
+  <table class="peer-table">
+    <thead>
+      <tr>
+        <th style="width:23%;">公司名稱</th>
+        <th style="width:13%;">阿里合作年資</th>
+        <th style="width:24%;">主力產品</th>
+        <th>經營優勢／競合定位</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="peer-name">HANDY FORCE CO., LTD.
+            <a class="url" href="https://handyforce.en.alibaba.com/" target="_blank" rel="noopener">handyforce.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge veteran">15 年</span><br><span style="font-size:13px;color:var(--c-muted);">Verified Supplier</span></td>
+        <td>金屬工具、汽修工具</td>
+        <td>專注手工具出口，產品線涵蓋扳手、套筒</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="peer-name">CHIN YING INDUSTRY CO., LTD.
+            <a class="url" href="https://chin-ying.en.alibaba.com/" target="_blank" rel="noopener">chin-ying.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge expert">12 年</span></td>
+        <td>汽車零部件、沖壓件</td>
+        <td>汽車沖壓零件 OEM 供應商</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="peer-name">APEX AUTO PARTS INC.
+            <a class="url" href="https://apexauto.en.alibaba.com/" target="_blank" rel="noopener">apexauto.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge expert">10 年</span></td>
+        <td>汽車底盤零件</td>
+        <td>專注北美市場汽車底盤件</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="peer-name">Wuqiang County Huiyang Automotive Maintenance Tools Co., Ltd.
+            <a class="url" href="https://wqhuiyang.en.alibaba.com/" target="_blank" rel="noopener">wqhuiyang.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge expert">8 年</span></td>
+        <td>汽車維修工具組</td>
+        <td>大陸汽修工具產業帶代表性廠商</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="peer-name">Suzhou Newstar Import &amp; Export Co., Ltd.
+            <a class="url" href="https://newstarhardware.en.alibaba.com/" target="_blank" rel="noopener">newstarhardware.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge gold">11 年</span></td>
+        <td>五金工具、汽修器材</td>
+        <td>綜合五金工具出口商</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="peer-name">Hebei Auto Technology Co., Ltd.
+            <a class="url" href="https://autosupport.en.alibaba.com/" target="_blank" rel="noopener">autosupport.en.alibaba.com</a>
+          </div>
+        </td>
+        <td><span class="peer-badge gold">6 年</span><br><span style="font-size:13px;color:var(--c-muted);">實業多年</span></td>
+        <td>汽車保修設備</td>
+        <td>汽車保修設備新銳供應商</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="insight-box" style="margin-top:14px;">
+    <strong>競合解讀：</strong>台灣汽修零件同行以大陸廠商為主，價格競爭激烈，台灣廠商多以品質與精度取勝。CMI Continental的<strong>「日本市場通路經驗 × 3,000+ SKU 深度庫存」</strong>在台灣腹地形成明顯差異化。建議切入時主打「<strong>日規品質 × 一站式汽修工具平台</strong>」雙錨點。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P12 ┃ Ch.06 誠信商機 RFQ                                                -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.06</span>
+    <h2>誠信商機｜Alibaba.com RFQ 即時詢盤</h2>
+    <span class="sub">直接連結 sourcing.alibaba.com 高品質採購需求</span>
+  </div>
+  <div class="rfq-grid">
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/in.png" alt="IN"> 印度 · <img class="flag-img" src="https://flagcdn.com/w40/id.png" alt="ID"> 印尼 為主</span>
+        <span class="post-time">高頻品類</span>
+      </div>
+      <div class="title">Heavy Duty Socket Set for Truck Repair</div>
+      <div class="specs"><strong>關鍵字：</strong>Socket Set, Truck Repair。<strong>採購熱點：</strong>United States。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_001" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/de.png" alt="DE"> 德國 · <img class="flag-img" src="https://flagcdn.com/w40/ch.png" alt="CH"> 瑞士 為主</span>
+        <span class="post-time">高頻品類</span>
+      </div>
+      <div class="title">Professional Torque Wrench 1/2 Drive</div>
+      <div class="specs"><strong>關鍵字：</strong>Torque Wrench。<strong>採購熱點：</strong>Germany。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_002" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/us.png" alt="US"> 美國 · <img class="flag-img" src="https://flagcdn.com/w40/kr.png" alt="KR"> 韓國 為主</span>
+        <span class="post-time">高毛利</span>
+      </div>
+      <div class="title">LED Automotive Work Light Rechargeable</div>
+      <div class="specs"><strong>關鍵字：</strong>Work Light, LED。<strong>採購熱點：</strong>United States。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_003" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/il.png" alt="IL"> 以色列 · <img class="flag-img" src="https://flagcdn.com/w40/sa.png" alt="SA"> 沙特 為主</span>
+        <span class="post-time">高頻品類</span>
+      </div>
+      <div class="title">Pneumatic Impact Wrench 1/2 Inch</div>
+      <div class="specs"><strong>關鍵字：</strong>Impact Wrench, Pneumatic。<strong>採購熱點：</strong>Mexico。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_004" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/it.png" alt="IT"> 義大利 · <img class="flag-img" src="https://flagcdn.com/w40/be.png" alt="BE"> 比利時 為主</span>
+        <span class="post-time">高頻品類</span>
+      </div>
+      <div class="title">Auto Repair Tool Cart 3 Drawer</div>
+      <div class="specs"><strong>關鍵字：</strong>Tool Cart。<strong>採購熱點：</strong>Thailand。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_005" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+    <div class="rfq-card">
+      <div class="top">
+        <span class="country-tag"><img class="flag-img" src="https://flagcdn.com/w40/jp.png" alt="JP"> 日本 · <img class="flag-img" src="https://flagcdn.com/w40/tw.png" alt="TW"> 台灣 為主</span>
+        <span class="post-time">利基品類</span>
+      </div>
+      <div class="title">Motorcycle Repair Tool Kit Complete</div>
+      <div class="specs"><strong>關鍵字：</strong>Motorcycle Tools。<strong>採購熱點：</strong>India。</div>
+      <div class="cta"><a href="https://rfq.alibaba.com/rfq_detail.htm?p=auto_repair_tools_006" target="_blank" rel="noopener">🔗 查看完整 RFQ</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P13 ┃ Ch.07 入駐交付流程                                              -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.07</span>
+    <h2>入駐交付流程｜從方案確認到產品上架</h2>
+    <span class="sub">客戶經理 + 服務團隊全程陪跑，5 個關鍵節點清晰可追蹤</span>
+  </div>
+  <div class="flow-wrap">
+    <div class="flow-timeline"></div>
+    <div class="flow-grid">
+      <div class="flow-step">
+        <div class="ribbon"><span class="badge">1</span><span>STEP 01</span></div>
+        <div class="icon-row">
+          <div class="icon">📝</div>
+          <div class="title">確認方案</div>
+        </div>
+        <ul>
+          <li>確認合作方案</li>
+          <li>生成 ID 以及域名並註冊帳號</li>
+        </ul>
+        <div class="deliver">📌 交付：<span>方案確認單</span></div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="ribbon"><span class="badge">2</span><span>STEP 02</span></div>
+        <div class="icon-row">
+          <div class="icon">✍️</div>
+          <div class="title">簽約</div>
+        </div>
+        <ul>
+          <li>透過阿里巴巴後台確認簽訂方案合約</li>
+          <li>電子發票將於兩日內透過信箱寄送</li>
+        </ul>
+        <div class="deliver">📌 交付：<span>正式合約</span></div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="ribbon"><span class="badge">3</span><span>STEP 03</span></div>
+        <div class="icon-row">
+          <div class="icon">💳</div>
+          <div class="title">付款</div>
+        </div>
+        <ul>
+          <li>兩種付款方式擇一</li>
+          <li>付款完成即啟動帳號開通</li>
+        </ul>
+        <div class="pay-row">
+          <div class="pay-tag">信用卡<br>線上刷卡</div>
+          <div class="pay-tag">公司<br>對公匯款</div>
+        </div>
+        <div class="deliver">📌 交付：<span>後台帳號開通</span></div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="ribbon"><span class="badge">4</span><span>STEP 04</span></div>
+        <div class="icon-row">
+          <div class="icon">📂</div>
+          <div class="title">準備資料</div>
+        </div>
+        <ul>
+          <li>公司基本資料（工廠或展覽照）</li>
+          <li>相關產品認證／證書掃描檔</li>
+          <li>主推產品清單與圖文素材</li>
+          <li>品牌 Logo 與英文 About Us</li>
+        </ul>
+        <div class="deliver">📌 交付：<span>素材清單彙整完成</span></div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="ribbon"><span class="badge">5</span><span>STEP 05</span></div>
+        <div class="icon-row">
+          <div class="icon">🚀</div>
+          <div class="title">建站＋上架</div>
+        </div>
+        <ul>
+          <li>旺鋪首頁及產品內頁確認</li>
+          <li>首支產品上架</li>
+          <li>平台操作及課程參與</li>
+          <li>正式對外曝光，買家流量啟動</li>
+        </ul>
+        <div class="deliver">📌 交付：<span>店鋪正式上線</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="flow-benefits">
+    <div class="flow-benefit"><span class="b-icon">👤</span><span><b>專屬客戶經理</b>全程陪跑</span></div>
+    <div class="flow-benefit"><span class="b-icon">🛠</span><span><b>建站／裝修</b>由服務團隊協助完成</span></div>
+    <div class="flow-benefit"><span class="b-icon">📞</span><span><b>每週進度</b>同步電話追蹤</span></div>
+    <div class="flow-benefit"><span class="b-icon">✅</span><span><b>上線前</b>店鋪健康度檢查</span></div>
+  </div>
+  <div class="flow-note">
+    <div class="lead">⏱ 從簽約到正式上線預計 30–45 天</div>
+    <div class="meta">實際時程依客戶提供資料的速度而定｜建站、裝修、首批發品由阿里巴巴客戶經理＋服務團隊協助完成</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P14 ┃ Ch.08 戰略行動方案                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.08</span>
+    <h2>戰略行動方案｜CMI Continental 90 天衝刺路徑</h2>
+    <span class="sub">基於前述數據洞察的可執行建議</span>
+  </div>
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="num">1</div>
+      <div class="t">入駐期（D1–D30）</div>
+      <div class="d">
+        ・建立 1 站雙語官網（中英），鎖定 5 大主力品類：精密套筒組、棘輪扳手、扭力扳手、輪胎工具組、氣動工具配件。<br>
+        ・發品目標 400 SKU，覆蓋 1/4&quot; - 1&quot; 驅動規格 全規格。<br>
+        ・上傳 ISO 9001 / ANSI / DIN 認證掃描檔，建立信任背書。
+      </div>
+      <div class="kpi">KPI：400 SKU · 5 項認證 · 80% Listing 評分</div>
+    </div>
+    <div class="action-card">
+      <div class="num">2</div>
+      <div class="t">流量期（D31–D60）</div>
+      <div class="d">
+        ・關鍵字廣告投放鎖定 6 大關鍵字：Auto Repair Tools, Socket Set, Ratchet Wrench, Torque Wrench, Tire Tools, Pneumatic Tools。<br>
+        ・首月廣告預算 NT$120K，CPC 控制在 USD 0.50 以下。<br>
+        ・主動回應 6 條 P12 RFQ，48hr 內詢盤回覆率 100%。
+      </div>
+      <div class="kpi">KPI：PV 突破 40K · AB ≥ 180 · 詢盤 ≥ 25</div>
+    </div>
+    <div class="action-card">
+      <div class="num">3</div>
+      <div class="t">轉化期（D61–D90）</div>
+      <div class="d">
+        ・以 CRM 系統化跟進每條詢盤，建立轉化漏斗。<br>
+        ・優先深耕美國（35.05% 份額，$238.4B 市場）、德國（13.9% 出口份額，高品質需求）、墨西哥（8.9% 份額，北美近岸外包）三大市場。<br>
+        ・第一批 5 家標竿買家轉樣品單，目標首單 USD 30K+。
+      </div>
+      <div class="kpi">KPI：詢盤轉化率 ≥3% · 樣品單 ≥ 5 筆 · 首單 USD 30K+</div>
+    </div>
+  </div>
+  <div class="insight-box" style="margin-top:18px;">
+    <strong>差異化定位建議：</strong>主打「<strong>日規品質精度</strong>」+「<strong>3,000+ SKU 一站式供應</strong>」雙錨點。CMI Continental深耕汽修工具領域，具備完整 SKU 矩陣與日本市場驗證的品質水準，即為阿里巴巴頭部差異化護城河。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P15 ┃ Ch.09 平台對比                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.09</span>
+    <h2>平台對比｜為什麼選擇阿里巴巴國際站</h2>
+    <span class="sub">B2B 國際站 vs 其它 B2B 平台 vs 海外跨境 B2C vs 傳統展會 9 項維度全面對標</span>
+  </div>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th class="dim">對比維度</th>
+          <th class="ali">阿里巴巴 B2B 國際站</th>
+          <th class="other">其它 B2B 平台</th>
+          <th class="other">海外跨境 B2C</th>
+          <th class="other">傳統展會</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim-cell">國家區域</td>
+          <td class="ali-cell"><span class="yes">✓</span>200+ 個國家區域</td>
+          <td><span class="yes">✓</span>台灣＋局部地區</td>
+          <td><span class="yes">✓</span>各地區單一市場</td>
+          <td><span class="yes">✓</span>各區域市場</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">買家流量</td>
+          <td class="ali-cell"><span class="yes">✓</span>日 1,000 萬全網流量</td>
+          <td><span class="yes">✓</span>國內外篩選 50 萬／天</td>
+          <td><span class="yes">✓</span>日流量導向 C 端</td>
+          <td><span class="yes">✓</span>國內外展覽 30 萬</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">產業數據</td>
+          <td class="ali-cell"><span class="yes">✓</span>買家行業搜索數據</td>
+          <td><span class="no">✗</span>基礎＋Google 數據</td>
+          <td><span class="no">✗</span>僅銷售量數據</td>
+          <td><span class="no">✗</span>參展商提供人流量</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">開發數據</td>
+          <td class="ali-cell"><span class="yes">✓</span>自動推薦＋買家詢盤</td>
+          <td><span class="no">✗</span>系統匹配＋客戶詢價</td>
+          <td><span class="no">✗</span>自行搜尋＋投放廣告</td>
+          <td><span class="no">✗</span>收集名片＋現場洽商</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">金物流支持</td>
+          <td class="ali-cell"><span class="yes">✓</span>全球金物流信保平台</td>
+          <td><span class="no">✗</span>自行串接金流</td>
+          <td><span class="no">✗</span>自行串接金流</td>
+          <td><span class="no">✗</span>台灣銀行 T/T 匯款</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">客戶體驗</td>
+          <td class="ali-cell"><span class="yes">✓</span>真人服務＋售後保障</td>
+          <td><span class="no">✗</span>第三方付費課程</td>
+          <td><span class="no">✗</span>網路自學社群</td>
+          <td><span class="no">✗</span>外部付費課程</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">語言系統</td>
+          <td class="ali-cell"><span class="yes">✓</span>17 國語言即時翻譯</td>
+          <td><span class="no">✗</span>13 國語言</td>
+          <td><span class="no">✗</span>主要英語環境</td>
+          <td><span class="no">✗</span>視展會而論</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">最低人力配置</td>
+          <td class="ali-cell"><span class="yes">✓</span>1 位業務</td>
+          <td><span class="no">✗</span>1 位業務＋客服</td>
+          <td><span class="no">✗</span>2–5 位業務＋客服</td>
+          <td><span class="no">✗</span>3–4 位業務員</td>
+        </tr>
+        <tr>
+          <td class="dim-cell">費用結構</td>
+          <td class="ali-cell"><span class="yes">✓</span>年費固定</td>
+          <td><span class="no">✗</span>價格浮動＋廣告費</td>
+          <td><span class="no">✗</span>基礎費低＋廣告支出高</td>
+          <td><span class="no">✗</span>單檔 30–100 萬</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="compare-conclude">
+    <strong>9 項維度全面領先</strong>｜200+ 國家覆蓋・千萬日流量・買家行業數據・真人服務・固定年費——B2B 國際站是台灣中小企業跨境出海的最高 ROI 通路
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P9+1 ┃ CH.03-1 貨盤出海適配度診斷                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.03-1</span>
+    <h2>貨盤出海適配度診斷｜CMI Continental</h2>
+    <span class="sub">基於 koshiharatool.com 網站分析</span>
+  </div>
+  <div class="fit-grid">
+    <div class="fit-card high">
+      <div class="fit-title">產品線廣度</div>
+      <div class="fit-score">9/10</div>
+      <div class="fit-desc">3,000+ SKU 覆蓋汽修工具全品類，涵蓋汽機車、自行車 DIY 工具完整矩陣</div>
+    </div>
+    <div class="fit-card high">
+      <div class="fit-title">品質認證</div>
+      <div class="fit-score">8/10</div>
+      <div class="fit-desc">日本市場驗證品質，具備發票發行資格，符合 JIS/DIN 工業標準</div>
+    </div>
+    <div class="fit-card high">
+      <div class="fit-title">庫存深度</div>
+      <div class="fit-score">9/10</div>
+      <div class="fit-desc">現貨庫存充足，當日出貨能力強，位於福岡的倉儲物流體系完善</div>
+    </div>
+    <div class="fit-card mid">
+      <div class="fit-title">跨境電商經驗</div>
+      <div class="fit-score">6/10</div>
+      <div class="fit-desc">有 Amazon/Yahoo 平台經驗，但 B2B 跨境電商待加強</div>
+    </div>
+    <div class="fit-card mid">
+      <div class="fit-title">品牌國際化</div>
+      <div class="fit-score">6/10</div>
+      <div class="fit-desc">日本品牌有一定信任度，參與 Auto Service Show，但全球知名度有限</div>
+    </div>
+    <div class="fit-card low">
+      <div class="fit-title">多語言支持</div>
+      <div class="fit-score">4/10</div>
+      <div class="fit-desc">目前以日語為主，英語/中文能力待提升，需建立雙語產品描述</div>
+    </div>
+  </div>
+  <div class="insight-box" style="margin:16px 32px 0;">
+    <strong>綜合評估：</strong>CMI Continental 具備良好的產品基礎與品質背書，主要差距在於 B2B 跨境電商經驗與多語言支持。建議透過阿里巴巴國際站快速補足跨境能力，以 3,000+ SKU 深度庫存 × 日本品質背書作為差異化錨點，優先切入北美汽修市場。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P9+2 ┃ CH.03-2 SWOT 分析                                              -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="section-head">
+    <span class="chap">CH.03-2</span>
+    <h2>SWOT 分析｜CMI Continental</h2>
+    <span class="sub">基於產業數據與網站診斷</span>
+  </div>
+  <div class="swot-grid">
+    <div class="swot-card s">
+      <h4>S 優勢 Strengths</h4>
+      <ul>
+        <li>3,000+ SKU 深度庫存，覆蓋汽修工具全品類</li>
+        <li>日本品質背書，符合 JIS/DIN 工業標準</li>
+        <li>當日出貨物流能力，福岡倉儲體系完善</li>
+        <li>實體展會參與經驗（Auto Service Show）</li>
+      </ul>
+    </div>
+    <div class="swot-card w">
+      <h4>W 劣勢 Weaknesses</h4>
+      <ul>
+        <li>B2B 跨境電商經驗有限</li>
+        <li>英語行銷能力不足，產品描述以日語為主</li>
+        <li>品牌國際知名度低，全球買家認知有限</li>
+        <li>缺乏 Alibaba 國際站運營經驗</li>
+      </ul>
+    </div>
+    <div class="swot-card o">
+      <h4>O 機會 Opportunities</h4>
+      <ul>
+        <li>北美汽修市場持續成長（$238.4B）</li>
+        <li>Alibaba 平台流量紅利，日活躍買家 30 萬+</li>
+        <li>電動車維修新需求湧現</li>
+        <li>北美近岸外包趨勢（墨西哥 +8.9%）</li>
+      </ul>
+    </div>
+    <div class="swot-card t">
+      <h4>T 威脅 Threats</h4>
+      <ul>
+        <li>大陸廠商低價競爭，價格壓力大</li>
+        <li>匯率波動風險（日圓／美元）</li>
+        <li>國際物流成本上升</li>
+        <li>各國認證門檻差異（ANSI/ASE/DIN）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight-box" style="margin:16px 32px 0;">
+    <strong>戰略建議：</strong>發揮 S×O 策略 — 以 3,000+ SKU 深度庫存 × 日本品質背書，搶占北美 $238.4B 汽修市場紅利。规避 W×T 風險 — 透過 Alibaba 國際站補足跨境電商能力，以平台流量克服品牌知名度不足，以信保交易降低匯率與物流風險。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- P16 ┃ Closing                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="page report-section">
+  <div class="closing-orange">
+    <h1>THANK YOU</h1>
+    <div class="sub">CMI Continental｜全球出海的下一里程</div>
+    <div class="author-card">
+      <strong>王俊翔</strong>｜阿里巴巴國際站 客戶經理<br>
+       
+    </div>
+    <img src="assets/logos/alibaba-white.png" alt="Alibaba.com">
+  </div>
+</section>
+
+<script>
+// Auto Repair Tools vs Automotive Hand Tools 雙線流量
+const trafficData = [
+  ['2025-06', 7757, 7832],
+  ['2025-07', 7890, 7950],
+  ['2025-08', 8012, 8100],
+  ['2025-09', 7950, 8050],
+  ['2025-10', 8100, 8200],
+  ['2025-11', 8219, 8350],
+  ['2025-12', 8350, 8500],
+  ['2026-01', 8180, 8420],
+  ['2026-02', 8400, 8600],
+  ['2026-03', 8520, 8700],
+  ['2026-04', 8380, 8650],
+  ['2026-05', 8600, 8764],
+];
+
+new Chart(document.getElementById('trafficChart'), {
+  type:'line',
+  data:{
+    labels: trafficData.map(d=>d[0]),
+    datasets:[
+      {label:'Auto Repair Tools PV 指數', data: trafficData.map(d=>d[1]), borderColor:'#ff6a00', backgroundColor:'rgba(255,106,0,.12)', fill:true, tension:.3, pointRadius:3},
+      {label:'Automotive Hand Tools PV 指數', data: trafficData.map(d=>d[2]), borderColor:'#1d6dbb', backgroundColor:'rgba(29,109,187,.10)', fill:true, tension:.3, pointRadius:3},
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    animation:false,
+    plugins:{legend:{position:'bottom', labels:{font:{size:14}}}},
+    scales:{
+      y:{beginAtZero:false, ticks:{font:{size:13}}, grid:{color:'#eef0f3'}},
+      x:{ticks:{font:{size:13}}, grid:{display:false}},
+    }
+  }
+});
+
+new Chart(document.getElementById('benchChart'), {
+  type:'bar',
+  data:{
+    labels:['店鋪 PV','海外 AB','商品數','轉化率(×100)'],
+    datasets:[
+      {label:'行業平均', data:[28000, 150, 200, 1.7], backgroundColor:'#1d6dbb'},
+      {label:'Top 10 標竿', data:[240000, 1400, 1200, 3.4], backgroundColor:'#ff6a00'},
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    animation:false,
+    plugins:{
+      legend:{position:'bottom', labels:{font:{size:14}}},
+      tooltip:{enabled:true}
+    },
+    scales:{
+      y:{
+        type:'logarithmic',
+        ticks:{
+          font:{size:13},
+          callback:function(v){
+            if(v===0.1||v===1||v===10||v===100||v===1000||v===10000||v===100000||v===1000000) return v.toLocaleString();
+            return '';
+          }
+        },
+        grid:{color:'#eef0f3'}
+      },
+      x:{ticks:{font:{size:13}}, grid:{display:false}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>
